@@ -930,6 +930,155 @@ body {
 
 /* 手机模拟界面 */
 .phone-mockup {
+  width: 380px;
+  flex-shrink: 0;
+  background: var(--card-bg);
+  border-radius: 36px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 0 0 8px #e8e8e8;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 640px;
+}
+
+/* 工作区：手机 + 积木卡片并排 */
+.xiaoai-workspace {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* 积木卡片面板（手机旁边纵向排列） */
+.block-panel {
+  flex: 1;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.6s ease;
+}
+
+.block-panel.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.block-panel .block-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.block-panel .block-card:hover {
+  transform: translateX(6px);
+  box-shadow: var(--shadow-hover);
+}
+
+.block-panel .block-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--primary), var(--secondary));
+  border-radius: 16px 0 0 16px;
+}
+
+.block-panel .block-card[data-card="map"]::before {
+  background: linear-gradient(to bottom, #10b981, #34d399);
+}
+
+.block-panel .block-card[data-card="budget"]::before {
+  background: linear-gradient(to bottom, #f59e0b, #fbbf24);
+}
+
+.block-panel .block-card[data-card="route"]::before {
+  background: linear-gradient(to bottom, #6366f1, #8b5cf6);
+}
+
+.block-panel .block-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.block-panel .block-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.block-panel .block-desc {
+  font-size: 12px;
+  color: var(--text-lighter);
+}
+
+.block-panel .block-preview {
+  margin-left: auto;
+  height: 36px;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 响应式：积木卡片面板 */
+@media (max-width: 768px) {
+  .xiaoai-workspace {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .phone-mockup {
+    width: 100%;
+    max-width: 380px;
+    height: 580px;
+  }
+
+  .block-panel {
+    width: 100%;
+    max-width: 380px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .block-panel .block-card {
+    flex: 1;
+    min-width: 140px;
+    padding: 12px;
+  }
+
+  .block-panel .block-icon {
+    font-size: 22px;
+  }
+
+  .block-panel .block-title {
+    font-size: 13px;
+  }
+
+  .block-panel .block-desc {
+    font-size: 11px;
+  }
+
+  .block-panel .block-preview {
+    display: none;
+  }
+}
+.phone-mockup {
   max-width: 400px;
   margin: 0 auto;
   background: var(--card-bg);
@@ -1187,61 +1336,7 @@ body {
   font-weight: 600;
 }
 
-/* 积木卡片空间 */
-.block-space {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  padding: 12px 16px;
-  background: #f5f5f7;
-  border-top: 1px solid var(--border);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease;
-}
-
-.block-space.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.block-card {
-  background: white;
-  border-radius: 16px;
-  padding: 14px;
-  box-shadow: var(--shadow);
-  cursor: pointer;
-  transition: var(--transition);
-  position: relative;
-  overflow: hidden;
-}
-
-.block-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: var(--shadow-hover);
-}
-
-.block-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  border-radius: 16px 16px 0 0;
-}
-
-.block-card[data-card="map"]::before {
-  background: linear-gradient(90deg, #10b981, #34d399);
-}
-
-.block-card[data-card="budget"]::before {
-  background: linear-gradient(90deg, #f59e0b, #fbbf24);
-}
-
-.block-card[data-card="route"]::before {
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
-}
-
+/* 积木卡片通用样式（手机旁边也复用） */
 .block-icon {
   font-size: 24px;
   margin-bottom: 6px;

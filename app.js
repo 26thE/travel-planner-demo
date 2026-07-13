@@ -373,7 +373,7 @@ function closeModal() {
 // ========== 小艺生成视图 ==========
 function initXiaoai() {
   const chatArea = document.getElementById('chat-area');
-  const blockSpace = document.getElementById('block-space');
+  const blockPanel = document.getElementById('block-panel');
   const flowSteps = document.querySelectorAll('.flow-step');
   const replayBtn = document.getElementById('replay-btn');
 
@@ -400,7 +400,7 @@ function initXiaoai() {
     document.querySelectorAll('.msg-content').forEach(c => c.style.display = 'none');
 
     // 隐藏积木
-    blockSpace.classList.remove('visible');
+    blockPanel.classList.remove('visible');
 
     // 重置流程步骤
     flowSteps.forEach(s => {
@@ -458,7 +458,7 @@ function initXiaoai() {
         // 最后一步显示积木卡片
         if (item.msg === 6) {
           setTimeout(() => {
-            blockSpace.classList.add('visible');
+            blockPanel.classList.add('visible');
           }, 1500);
         }
       }, item.delay);
@@ -466,7 +466,7 @@ function initXiaoai() {
   }
 
   // 积木卡片点击事件
-  blockSpace.querySelectorAll('.block-card').forEach(card => {
+  blockPanel.querySelectorAll('.block-card').forEach(card => {
     card.addEventListener('click', () => {
       const cardType = card.dataset.card;
       const navButtons = document.querySelectorAll('.nav-btn');
