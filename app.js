@@ -8,6 +8,7 @@ let markers = [];
 // ========== 初始化 ==========
 document.addEventListener('DOMContentLoaded', () => {
   initHero();
+  initXiaoai();
   initTimeline();
   initNav();
   initModal();
@@ -367,4 +368,143 @@ function openSpotDetail(spot) {
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('active');
   document.body.style.overflow = '';
+}
+
+// ========== 小艺生成视图 ==========
+function initXiaoai() {
+  const chatArea = document.getElementById('chat-area');
+  const blockSpace = document.getElementById('block-space');
+  const flowSteps = document.querySelectorAll('.flow-step');
+  const replayBtn = document.getElementById('replay-btn');
+
+  // 定义对话序列
+  const dialogSequence = [
+    { msg: 1, type: 'user', delay: 0 },
+    { msg: 2, type: 'ai', delay: 800, typing: 'typing-1', content: 'content-1', step: 1 },
+    { msg: 3, type: 'ai', delay: 2000, typing: 'typing-2', content: 'content-2', step: 2 },
+    { msg: 4, type: 'ai', delay: 4000, typing: 'typing-3', content: 'content-3', step: 3 },
+    { msg: 5, type: 'user', delay: 5500 },
+    { msg: 6, type: 'ai', delay: 6500, typing: 'typing-4', content: 'content-4', step: 4 },
+  ];
+
+  function resetAnimation() {
+    // 重置所有消息
+    document.querySelectorAll('.chat-msg').forEach(msg => {
+      msg.style.opacity = '0';
+      msg.style.transform = 'translateY(10px)';
+      msg.style.animation = 'none';
+    });
+
+    // 重置所有打字机
+    document.querySelectorAll('.typing-indicator').forEach(t => t.style.display = 'flex');
+    document.querySelectorAll('.msg-content').forEach(c => c.style.display = 'none');
+
+    // 隐藏积木
+    blockSpace.classList.remove('visible');
+
+    // 重置流程步骤
+    flowSteps.forEach(s => {
+      s.classList.remove('active', 'completed');
+    });
+    if (flowSteps[0]) flowSteps[0].classList.add('active');
+
+    // 滚动到顶部
+    chatArea.scrollTop = 0;
+  }
+
+  function playAnimation() {
+    resetAnimation();
+
+    dialogSequence.forEach(item => {
+      setTimeout(() => {
+        const msgEl = document.querySelector(`.chat-msg[data-msg="${item.msg}"]`);
+        if (!msgEl) return;
+
+        // 显示消息
+        msgEl.style.animation = '';
+        msgEl.offsetHeight; // 强制重绘
+        msgEl.style.animation = 'msgAppear 0.4s ease forwards';
+
+        // 滚动到底部
+        chatArea.scrollTop = chatArea.scrollHeight;
+
+        // AI 消息：先显示打字机，再显示内容
+        if (item.type === 'ai' && item.typing && item.content) {
+          const typingEl = document.getElementById(item.typing);
+          const contentEl = document.getElementById(item.content);
+
+          if (typingEl) typingEl.style.display = 'flex';
+          if (contentEl) contentEl.style.display = 'none';
+
+          setTimeout(() => {
+            if (typingEl) typingEl.style.display = 'none';
+            if (contentEl) contentEl.style.display = 'block';
+            chatArea.scrollTop = chatArea.scrollHeight;
+          }, 1200);
+        }
+
+        // 更新流程步骤
+        if (item.step) {
+          flowSteps.forEach((s, idx) => {
+            if (idx < item.step - 1) {
+              s.classList.add('completed');
+              s.classList.remove('active');
+            } else if (idx === item.step - 1) {
+              s.classList.add('active');
+            }
+          });
+        }
+
+        // 最后一步显示积木卡片
+        if (item.msg === 6) {
+          setTimeout(() => {
+            blockSpace.classList.add('visible');
+          }, 1500);
+        }
+      }, item.delay);
+    });
+  }
+
+  // 积木卡片点击事件
+  blockSpace.querySelectorAll('.block-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const cardType = card.dataset.card;
+      const navButtons = document.querySelectorAll('.nav-btn');
+
+      navButtons.forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+
+      if (cardType === 'route') {
+        // 交通卡片跳转到地图视图
+        const mapBtn = document.querySelector('[data-view="map"]');
+        if (mapBtn) mapBtn.classList.add('active');
+        document.getElementById('map-view').classList.add('active');
+        setTimeout(initMap, 100);
+      } else {
+        const targetBtn = document.querySelector(`[data-view="${cardType}"]`);
+        if (targetBtn) targetBtn.classList.add('active');
+        document.getElementById(`${cardType}-view`).classList.add('active');
+        if (cardType === 'map') setTimeout(initMap, 100);
+      }
+    });
+  });
+
+  // 重新体验按钮
+  if (replayBtn) {
+    replayBtn.addEventListener('click', () => {
+      playAnimation();
+    });
+  }
+
+  // 初始播放（默认不自动播放，等用户切到这个视图再播放）
+  // 监听视图切换，第一次切换到 xiaoai 时播放
+  let hasPlayed = false;
+  const xiaoaiView = document.getElementById('xiaoai-view');
+  const observer = new MutationObserver(() => {
+    if (xiaoaiView.classList.contains('active') && !hasPlayed) {
+      hasPlayed = true;
+      setTimeout(playAnimation, 300);
+    }
+  });
+  observer.observe(xiaoaiView, { attributes: true, attributeFilter: ['class'] });
 }

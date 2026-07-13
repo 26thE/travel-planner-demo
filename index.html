@@ -18,6 +18,9 @@
       <span class="brand-text">旅行计划助手</span>
     </div>
     <div class="nav-actions">
+      <button class="nav-btn" data-view="xiaoai">
+        <i class="fas fa-robot"></i> 小艺生成
+      </button>
       <button class="nav-btn active" data-view="timeline">
         <i class="fas fa-stream"></i> 时间线
       </button>
@@ -46,6 +49,214 @@
 
   <!-- 主内容区 -->
   <main class="main-content">
+    <!-- 小艺生成视图 -->
+    <section id="xiaoai-view" class="view">
+      <!-- 流程步骤条 -->
+      <div class="flow-steps" id="flow-steps">
+        <div class="flow-step active" data-step="1">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-label">选择 Skill</div>
+        </div>
+        <div class="flow-line"></div>
+        <div class="flow-step" data-step="2">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-label">导入博文</div>
+        </div>
+        <div class="flow-line"></div>
+        <div class="flow-step" data-step="3">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-label">输入预算</div>
+        </div>
+        <div class="flow-line"></div>
+        <div class="flow-step" data-step="4">
+          <div class="flow-step-num">4</div>
+          <div class="flow-step-label">生成积木</div>
+        </div>
+      </div>
+
+      <!-- 手机模拟界面 -->
+      <div class="phone-mockup">
+        <!-- 手机顶部状态栏 -->
+        <div class="phone-statusbar">
+          <span class="phone-time">10:08</span>
+          <div class="phone-notch"></div>
+          <div class="phone-icons">
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <i class="fas fa-battery-full"></i>
+          </div>
+        </div>
+
+        <!-- 小艺助手头部 -->
+        <div class="xiaoai-header">
+          <div class="xiaoai-avatar">🤖</div>
+          <div class="xiaoai-info">
+            <div class="xiaoai-name">小艺 · AI旅行助手</div>
+            <div class="xiaoai-status">
+              <span class="status-dot"></span> 在线 · 已接入小红书
+            </div>
+          </div>
+          <div class="xiaoai-actions">
+            <i class="fas fa-ellipsis-v"></i>
+          </div>
+        </div>
+
+        <!-- 对话区域 -->
+        <div class="chat-area" id="chat-area">
+          <div class="chat-date">今天 10:02</div>
+
+          <!-- 用户消息 -->
+          <div class="chat-msg user-msg" data-msg="1">
+            <div class="msg-bubble">
+              我想去云南玩，预算 <strong>3000</strong> 左右，有推荐吗？🌸
+            </div>
+            <div class="msg-avatar">👤</div>
+          </div>
+
+          <!-- 小艺回复 1 -->
+          <div class="chat-msg ai-msg" data-msg="2">
+            <div class="msg-avatar">🤖</div>
+            <div class="msg-bubble">
+              <div class="typing-indicator" id="typing-1">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="msg-content" id="content-1" style="display:none">
+                收到！正在搜索小红书热门笔记... 🔍
+                <div class="msg-meta">已找到 3 篇相关攻略</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 小艺回复 2 -->
+          <div class="chat-msg ai-msg" data-msg="3">
+            <div class="msg-avatar">🤖</div>
+            <div class="msg-bubble">
+              <div class="typing-indicator" id="typing-2">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="msg-content" id="content-2" style="display:none">
+                <div class="import-card">
+                  <div class="import-title">
+                    <i class="fas fa-file-import"></i> 已导入小红书资源
+                  </div>
+                  <div class="import-item">
+                    <span class="import-icon">📚</span>
+                    <span>「云南旅行 Skill」</span>
+                    <span class="import-tag">官方</span>
+                  </div>
+                  <div class="import-item">
+                    <span class="import-icon">📖</span>
+                    <span>「洱海骑行攻略」</span>
+                    <span class="import-tag">2.3w赞</span>
+                  </div>
+                  <div class="import-item">
+                    <span class="import-icon">📖</span>
+                    <span>「玉龙雪山避坑指南」</span>
+                    <span class="import-tag">1.8w赞</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 小艺回复 3 -->
+          <div class="chat-msg ai-msg" data-msg="4">
+            <div class="msg-avatar">🤖</div>
+            <div class="msg-bubble">
+              <div class="typing-indicator" id="typing-3">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="msg-content" id="content-3" style="display:none">
+                根据你的预算 <strong>¥3000</strong>，已优化为 <strong>4 天 3 夜</strong> 慢旅行计划 📅
+                <div class="msg-meta">覆盖大理 + 丽江 · 6 个核心景点</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 用户回复 -->
+          <div class="chat-msg user-msg" data-msg="5">
+            <div class="msg-bubble">
+              想看看完整计划 👀
+            </div>
+            <div class="msg-avatar">👤</div>
+          </div>
+
+          <!-- 小艺回复 4 -->
+          <div class="chat-msg ai-msg" data-msg="6">
+            <div class="msg-avatar">🤖</div>
+            <div class="msg-bubble">
+              <div class="typing-indicator" id="typing-4">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="msg-content" id="content-4" style="display:none">
+                已生成！点击下方积木卡片查看你的旅行计划 👇
+                <div class="msg-meta">每张卡片可展开详细内容</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 积木卡片空间 -->
+        <div class="block-space" id="block-space">
+          <div class="block-card" data-card="timeline">
+            <div class="block-icon">📅</div>
+            <div class="block-title">时间线</div>
+            <div class="block-desc">4天3夜 · 6个行程点</div>
+            <div class="block-preview">
+              <div class="preview-line"></div>
+              <div class="preview-dot"></div>
+              <div class="preview-dot"></div>
+              <div class="preview-dot"></div>
+            </div>
+          </div>
+          <div class="block-card" data-card="map">
+            <div class="block-icon">🗺️</div>
+            <div class="block-title">地图</div>
+            <div class="block-desc">大理 ↔ 丽江</div>
+            <div class="block-preview">
+              <div class="preview-map">
+                <span class="preview-pin">📍</span>
+              </div>
+            </div>
+          </div>
+          <div class="block-card" data-card="budget">
+            <div class="block-icon">💰</div>
+            <div class="block-title">预算</div>
+            <div class="block-desc">¥3000 分配</div>
+            <div class="block-preview">
+              <div class="preview-bar" style="width:70%"></div>
+              <div class="preview-bar" style="width:50%"></div>
+              <div class="preview-bar" style="width:30%"></div>
+            </div>
+          </div>
+          <div class="block-card" data-card="route">
+            <div class="block-icon">🚌</div>
+            <div class="block-title">交通</div>
+            <div class="block-desc">5段路线指引</div>
+            <div class="block-preview">
+              <div class="preview-route">
+                <span>A</span>→<span>B</span>→<span>C</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 底部输入框 -->
+        <div class="phone-inputbar">
+          <i class="fas fa-plus-circle"></i>
+          <div class="input-placeholder">输入预算或目的地...</div>
+          <i class="fas fa-paper-plane"></i>
+        </div>
+      </div>
+
+      <!-- 重新体验按钮 -->
+      <div class="replay-area">
+        <button class="replay-btn" id="replay-btn">
+          <i class="fas fa-redo"></i> 重新体验生成流程
+        </button>
+      </div>
+    </section>
+
     <!-- 时间线视图 -->
     <section id="timeline-view" class="view active">
       <div class="timeline-container">
