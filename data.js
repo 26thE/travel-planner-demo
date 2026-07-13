@@ -370,7 +370,55 @@ const TRIP_DATA = {
   ]
 };
 
-// 导出给 app.js 使用
+// 自动分类：玩 / 食 / 住 / 行
+function categorizeSpots() {
+  const result = { byDay: {}, byPlace: {} };
+
+  TRIP_DATA.schedule.forEach(day => {
+    const dayCats = { play: [], food: [], stay: [], transport: [] };
+
+    day.spots.forEach(spot => {
+      const combined = spot.title + ' ' + spot.desc;
+      const foodKeywords = /午餐|晚餐|早餐|小吃|美食|火锅|米线|粑粑|乳扇|鲜花饼|菌菇|石板烧|腊排骨|鸡豆凉粉|纳西烤鱼|凉鸡|饵丝|饮品|咖啡|啤酒|茶饮|点心|甜品|风味|吃/i;
+      const stayKeywords = /入住|客栈|酒店|住宿|民宿|休整|放行李/i;
+      const transportKeywords = /抵达|动车|火车|飞机|大巴|骑行|交通|返程|前往|机场|公交|车站|打车|包车|拼车|租车|索道|缆车|转|去|回/i;
+
+      if (foodKeywords.test(combined)) {
+        dayCats.food.push(spot);
+      } else if (stayKeywords.test(combined)) {
+        dayCats.stay.push(spot);
+      } else if (transportKeywords.test(combined)) {
+        dayCats.transport.push(spot);
+      } else {
+        dayCats.play.push(spot);
+      }
+    });
+
+    result.byDay[day.day] = dayCats;
+  });
+
+  // 按地点分类
+  TRIP_DATA.destinations.forEach(dest => {
+    const placeCats = { play: [], food: [], stay: [], transport: [] };
+    dest.days.forEach(dayNum => {
+      const dayCats = result.byDay[dayNum];
+      placeCats.play.push(...dayCats.play);
+      placeCats.food.push(...dayCats.food);
+      placeCats.stay.push(...dayCats.stay);
+      placeCats.transport.push(...dayCats.transport);
+    });
+    result.byPlace[dest.id] = placeCats;
+  });
+
+  return result;
+}
+
+const CATEGORIZED_DATA = categorizeSpots();
+
+// 导出
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { TRIP_DATA, CATEGORIZED_DATA };
+}
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = TRIP_DATA;
 }

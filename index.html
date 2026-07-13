@@ -232,48 +232,143 @@
           </div>
         </div>
 
-        <!-- 积木卡片面板（手机旁边） -->
-        <div class="block-panel" id="block-panel">
-          <div class="block-card" data-card="timeline">
-            <div class="block-icon">📅</div>
-            <div class="block-title">时间线</div>
-            <div class="block-desc">4天3夜 · 6个行程点</div>
-            <div class="block-preview">
-              <div class="preview-line"></div>
-              <div class="preview-dot"></div>
-              <div class="preview-dot"></div>
-              <div class="preview-dot"></div>
-            </div>
+        <!-- 生成结果面板（三个版本切换） -->
+        <div class="result-panel" id="result-panel">
+          <!-- 版本切换标签 -->
+          <div class="version-tabs">
+            <button class="v-tab active" data-version="v1">对比版</button>
+            <button class="v-tab" data-version="v2">时间线轴</button>
+            <button class="v-tab" data-version="v3">地点线</button>
           </div>
-          <div class="block-card" data-card="map">
-            <div class="block-icon">🗺️</div>
-            <div class="block-title">地图</div>
-            <div class="block-desc">大理 ↔ 丽江</div>
-            <div class="block-preview">
-              <div class="preview-map">
-                <span class="preview-pin">📍</span>
+
+          <!-- 版本1：四维度对比卡片 -->
+          <div class="version-content active" id="v1-content">
+            <div class="compare-card" data-card="timeline">
+              <div class="compare-header">
+                <span class="compare-icon">📅</span>
+                <span class="compare-title">时间线</span>
+              </div>
+              <div class="compare-body">
+                <div class="compare-stat">4 天 3 夜</div>
+                <div class="compare-tags">
+                  <span>Day1 大理古城</span>
+                  <span>Day2 洱海环海</span>
+                  <span>Day3 玉龙雪山</span>
+                  <span>Day4 返程</span>
+                </div>
+              </div>
+            </div>
+            <div class="compare-card" data-card="map">
+              <div class="compare-header">
+                <span class="compare-icon">🗺️</span>
+                <span class="compare-title">地图</span>
+              </div>
+              <div class="compare-body">
+                <div class="compare-route">大理 → 丽江</div>
+                <div class="compare-tags">
+                  <span>古城</span>
+                  <span>洱海</span>
+                  <span>雪山</span>
+                  <span>蓝月谷</span>
+                </div>
+              </div>
+            </div>
+            <div class="compare-card" data-card="budget">
+              <div class="compare-header">
+                <span class="compare-icon">💰</span>
+                <span class="compare-title">预算</span>
+              </div>
+              <div class="compare-body">
+                <div class="compare-stat">¥3,000</div>
+                <div class="compare-tags">
+                  <span>大交通 ¥800</span>
+                  <span>住宿 ¥600</span>
+                  <span>餐饮 ¥700</span>
+                  <span>门票 ¥400</span>
+                </div>
+              </div>
+            </div>
+            <div class="compare-card" data-card="experience">
+              <div class="compare-header">
+                <span class="compare-icon">🎨</span>
+                <span class="compare-title">体验</span>
+              </div>
+              <div class="compare-body">
+                <div class="compare-stat">6 项特色</div>
+                <div class="compare-tags">
+                  <span>📸 洱海日落</span>
+                  <span>🚲 生态廊道</span>
+                  <span>🏔️ 冰川公园</span>
+                  <span>💎 蓝月谷</span>
+                </div>
               </div>
             </div>
           </div>
-          <div class="block-card" data-card="budget">
-            <div class="block-icon">💰</div>
-            <div class="block-title">预算</div>
-            <div class="block-desc">¥3000 分配</div>
-            <div class="block-preview">
-              <div class="preview-bar" style="width:70%"></div>
-              <div class="preview-bar" style="width:50%"></div>
-              <div class="preview-bar" style="width:30%"></div>
-            </div>
-          </div>
-          <div class="block-card" data-card="route">
-            <div class="block-icon">🚌</div>
-            <div class="block-title">交通</div>
-            <div class="block-desc">5段路线指引</div>
-            <div class="block-preview">
-              <div class="preview-route">
-                <span>A</span>→<span>B</span>→<span>C</span>
+
+          <!-- 版本2：时间线轴 + 四板块 -->
+          <div class="version-content" id="v2-content">
+            <!-- 时间线轴 -->
+            <div class="axis-bar" id="day-axis">
+              <div class="axis-item active" data-day="1">
+                <div class="axis-dot">1</div>
+                <div class="axis-label">5月1日</div>
+                <div class="axis-sub">大理</div>
+              </div>
+              <div class="axis-line"></div>
+              <div class="axis-item" data-day="2">
+                <div class="axis-dot">2</div>
+                <div class="axis-label">5月2日</div>
+                <div class="axis-sub">大理</div>
+              </div>
+              <div class="axis-line"></div>
+              <div class="axis-item" data-day="3">
+                <div class="axis-dot">3</div>
+                <div class="axis-label">5月3日</div>
+                <div class="axis-sub">丽江</div>
+              </div>
+              <div class="axis-line"></div>
+              <div class="axis-item" data-day="4">
+                <div class="axis-dot">4</div>
+                <div class="axis-label">5月4日</div>
+                <div class="axis-sub">丽江</div>
               </div>
             </div>
+            <!-- 四板块标签 -->
+            <div class="category-tabs" id="day-categories">
+              <button class="cat-tab active" data-cat="play">🎯 玩</button>
+              <button class="cat-tab" data-cat="food">🍜 食</button>
+              <button class="cat-tab" data-cat="stay">🏨 住</button>
+              <button class="cat-tab" data-cat="transport">🚌 行</button>
+            </div>
+            <!-- 内容列表 -->
+            <div class="category-list" id="day-list"></div>
+          </div>
+
+          <!-- 版本3：地点线 + 四板块 -->
+          <div class="version-content" id="v3-content">
+            <!-- 地点线 -->
+            <div class="axis-bar" id="place-axis">
+              <div class="axis-item active" data-place="dali">
+                <div class="axis-dot">🏔️</div>
+                <div class="axis-label">大理</div>
+                <div class="axis-sub">2 天</div>
+              </div>
+              <div class="axis-line"></div>
+              <div class="axis-item" data-place="lijiang">
+                <div class="axis-dot">🏔️</div>
+                <div class="axis-label">丽江</div>
+                <div class="axis-sub">2 天</div>
+              </div>
+            </div>
+            <!-- 四板块标签 -->
+            <div class="category-tabs" id="place-categories">
+              <button class="cat-tab active" data-cat="play">🎯 玩</button>
+              <button class="cat-tab" data-cat="food">🍜 食</button>
+              <button class="cat-tab" data-cat="stay">🏨 住</button>
+              <button class="cat-tab" data-cat="transport">🚌 行</button>
+            </div>
+            <!-- 内容列表 -->
+            <div class="category-list" id="place-list"></div>
           </div>
         </div>
       </div>

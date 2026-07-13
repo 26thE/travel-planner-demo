@@ -373,9 +373,139 @@ function closeModal() {
 // ========== 小艺生成视图 ==========
 function initXiaoai() {
   const chatArea = document.getElementById('chat-area');
-  const blockPanel = document.getElementById('block-panel');
+  const resultPanel = document.getElementById('result-panel');
   const flowSteps = document.querySelectorAll('.flow-step');
   const replayBtn = document.getElementById('replay-btn');
+
+  // 版本状态
+  let v2Day = 1, v2Cat = 'play';
+  let v3Place = 'dali', v3Cat = 'play';
+
+  // 渲染单个spot
+  function renderSpotItem(spot) {
+    const tagsHtml = spot.tags
+      ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">${spot.tags.map(t => `<span style="padding:2px 6px;border-radius:6px;background:#f8f4f2;font-size:10px;color:var(--text-light)">${t}</span>`).join('')}</div>`
+      : '';
+    return `
+      <div class="category-item" data-title="${spot.title}">
+        <span class="cat-icon">${spot.icon}</span>
+        <div class="cat-info">
+          <div class="cat-title">${spot.title}</div>
+          <div class="cat-desc">${spot.desc}</div>
+          ${tagsHtml}
+        </div>
+        <span class="cat-cost">${spot.cost}</span>
+      </div>
+    `;
+  }
+
+  // 渲染分类列表
+  function renderCategoryList(container, items) {
+    if (!items || items.length === 0) {
+      container.innerHTML = `<div class="cat-empty">暂无</div>`;
+      return;
+    }
+    container.innerHTML = items.map(renderSpotItem).join('');
+  }
+
+  // 渲染版本2
+  function renderV2() {
+    const dayData = CATEGORIZED_DATA.byDay[v2Day];
+    if (dayData) {
+      renderCategoryList(document.getElementById('day-list'), dayData[v2Cat]);
+    }
+    document.querySelectorAll('#day-axis .axis-item').forEach(el => {
+      el.classList.toggle('active', parseInt(el.dataset.day) === v2Day);
+    });
+    document.querySelectorAll('#day-categories .cat-tab').forEach(el => {
+      el.classList.toggle('active', el.dataset.cat === v2Cat);
+    });
+  }
+
+  // 渲染版本3
+  function renderV3() {
+    const placeData = CATEGORIZED_DATA.byPlace[v3Place];
+    if (placeData) {
+      renderCategoryList(document.getElementById('place-list'), placeData[v3Cat]);
+    }
+    document.querySelectorAll('#place-axis .axis-item').forEach(el => {
+      el.classList.toggle('active', el.dataset.place === v3Place);
+    });
+    document.querySelectorAll('#place-categories .cat-tab').forEach(el => {
+      el.classList.toggle('active', el.dataset.cat === v3Cat);
+    });
+  }
+
+  // 版本切换标签
+  document.querySelectorAll('.v-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.v-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const version = tab.dataset.version;
+      document.querySelectorAll('.version-content').forEach(c => c.classList.remove('active'));
+      document.getElementById(`${version}-content`).classList.add('active');
+      if (version === 'v2') renderV2();
+      if (version === 'v3') renderV3();
+    });
+  });
+
+  // 版本2：时间线轴
+  document.querySelectorAll('#day-axis .axis-item').forEach(el => {
+    el.addEventListener('click', () => {
+      v2Day = parseInt(el.dataset.day);
+      renderV2();
+    });
+  });
+
+  // 版本2：四板块
+  document.querySelectorAll('#day-categories .cat-tab').forEach(el => {
+    el.addEventListener('click', () => {
+      v2Cat = el.dataset.cat;
+      renderV2();
+    });
+  });
+
+  // 版本3：地点线
+  document.querySelectorAll('#place-axis .axis-item').forEach(el => {
+    el.addEventListener('click', () => {
+      v3Place = el.dataset.place;
+      renderV3();
+    });
+  });
+
+  // 版本3：四板块
+  document.querySelectorAll('#place-categories .cat-tab').forEach(el => {
+    el.addEventListener('click', () => {
+      v3Cat = el.dataset.cat;
+      renderV3();
+    });
+  });
+
+  // 版本1：对比卡片点击
+  document.querySelectorAll('.compare-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const cardType = card.dataset.card;
+      const navButtons = document.querySelectorAll('.nav-btn');
+      navButtons.forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+
+      if (cardType === 'experience') {
+        const timelineBtn = document.querySelector('[data-view="timeline"]');
+        if (timelineBtn) timelineBtn.classList.add('active');
+        document.getElementById('timeline-view').classList.add('active');
+      } else if (cardType === 'route') {
+        const mapBtn = document.querySelector('[data-view="map"]');
+        if (mapBtn) mapBtn.classList.add('active');
+        document.getElementById('map-view').classList.add('active');
+        setTimeout(initMap, 100);
+      } else {
+        const targetBtn = document.querySelector(`[data-view="${cardType}"]`);
+        if (targetBtn) targetBtn.classList.add('active');
+        document.getElementById(`${cardType}-view`).classList.add('active');
+        if (cardType === 'map') setTimeout(initMap, 100);
+      }
+    });
+  });
 
   // 定义对话序列
   const dialogSequence = [
@@ -388,28 +518,24 @@ function initXiaoai() {
     { msg: 7, type: 'user', delay: 9000 },
     { msg: 8, type: 'ai', delay: 10200, typing: 'typing-4', content: 'content-4', step: 4 },
   ];
+
   function resetAnimation() {
-    // 重置所有消息
     document.querySelectorAll('.chat-msg').forEach(msg => {
       msg.style.opacity = '0';
       msg.style.transform = 'translateY(10px)';
       msg.style.animation = 'none';
     });
 
-    // 重置所有打字机
     document.querySelectorAll('.typing-indicator').forEach(t => t.style.display = 'flex');
     document.querySelectorAll('.msg-content').forEach(c => c.style.display = 'none');
 
-    // 隐藏积木
-    blockPanel.classList.remove('visible');
+    resultPanel.classList.remove('visible');
 
-    // 重置流程步骤
     flowSteps.forEach(s => {
       s.classList.remove('active', 'completed');
     });
     if (flowSteps[0]) flowSteps[0].classList.add('active');
 
-    // 滚动到顶部
     chatArea.scrollTop = 0;
   }
 
@@ -421,15 +547,12 @@ function initXiaoai() {
         const msgEl = document.querySelector(`.chat-msg[data-msg="${item.msg}"]`);
         if (!msgEl) return;
 
-        // 显示消息
         msgEl.style.animation = '';
-        msgEl.offsetHeight; // 强制重绘
+        msgEl.offsetHeight;
         msgEl.style.animation = 'msgAppear 0.4s ease forwards';
 
-        // 滚动到底部
         chatArea.scrollTop = chatArea.scrollHeight;
 
-        // AI 消息：先显示打字机，再显示内容
         if (item.type === 'ai' && item.typing && item.content) {
           const typingEl = document.getElementById(item.typing);
           const contentEl = document.getElementById(item.content);
@@ -444,7 +567,6 @@ function initXiaoai() {
           }, 1200);
         }
 
-        // 更新流程步骤
         if (item.step) {
           flowSteps.forEach((s, idx) => {
             if (idx < item.step - 1) {
@@ -456,49 +578,21 @@ function initXiaoai() {
           });
         }
 
-        // 最后一步显示积木卡片
         if (item.msg === 8) {
           setTimeout(() => {
-            blockPanel.classList.add('visible');
+            resultPanel.classList.add('visible');
           }, 1500);
         }
       }, item.delay);
     });
   }
 
-  // 积木卡片点击事件
-  blockPanel.querySelectorAll('.block-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const cardType = card.dataset.card;
-      const navButtons = document.querySelectorAll('.nav-btn');
-
-      navButtons.forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-
-      if (cardType === 'route') {
-        // 交通卡片跳转到地图视图
-        const mapBtn = document.querySelector('[data-view="map"]');
-        if (mapBtn) mapBtn.classList.add('active');
-        document.getElementById('map-view').classList.add('active');
-        setTimeout(initMap, 100);
-      } else {
-        const targetBtn = document.querySelector(`[data-view="${cardType}"]`);
-        if (targetBtn) targetBtn.classList.add('active');
-        document.getElementById(`${cardType}-view`).classList.add('active');
-        if (cardType === 'map') setTimeout(initMap, 100);
-      }
-    });
-  });
-
-  // 重新体验按钮
   if (replayBtn) {
     replayBtn.addEventListener('click', () => {
       playAnimation();
     });
   }
 
-  // 初始播放（默认不自动播放，等用户切到这个视图再播放）
-  // 监听视图切换，第一次切换到 xiaoai 时播放
   let hasPlayed = false;
   const xiaoaiView = document.getElementById('xiaoai-view');
   const observer = new MutationObserver(() => {

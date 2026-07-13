@@ -1078,18 +1078,6 @@ body {
     display: none;
   }
 }
-.phone-mockup {
-  max-width: 400px;
-  margin: 0 auto;
-  background: var(--card-bg);
-  border-radius: 36px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 0 0 8px #e8e8e8;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 700px;
-}
 
 .phone-statusbar {
   display: flex;
@@ -1507,12 +1495,352 @@ body {
     width: 12px;
   }
 
-  .block-space {
-    gap: 8px;
-    padding: 10px 12px;
+}
+
+/* ========== 三个版本结果面板 ========== */
+.result-panel {
+  flex: 1;
+  max-width: 420px;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.6s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.result-panel.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 版本切换标签 */
+.version-tabs {
+  display: flex;
+  gap: 8px;
+  background: white;
+  border-radius: 20px;
+  padding: 4px;
+  box-shadow: var(--shadow);
+}
+
+.v-tab {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--text-light);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.v-tab:hover {
+  background: #f8f4f2;
+}
+
+.v-tab.active {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  box-shadow: 0 2px 8px rgba(255,36,66,0.3);
+}
+
+/* 版本内容区 */
+.version-content {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.version-content.active {
+  display: block;
+}
+
+/* ========== 版本1：四维度对比卡片 ========== */
+#v1-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+#v1-content.active {
+  display: grid;
+}
+
+.compare-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.compare-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.compare-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 16px 16px 0 0;
+}
+
+.compare-card[data-card="timeline"]::before {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.compare-card[data-card="map"]::before {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.compare-card[data-card="budget"]::before {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.compare-card[data-card="experience"]::before {
+  background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+}
+
+.compare-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.compare-icon {
+  font-size: 22px;
+}
+
+.compare-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.compare-body {
+  font-size: 12px;
+}
+
+.compare-stat {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.compare-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.compare-tags span {
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: #f8f4f2;
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+/* ========== 版本2/3：时间线轴 + 四板块 ========== */
+.axis-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border-radius: 16px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 10px;
+}
+
+.axis-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  opacity: 0.5;
+}
+
+.axis-item:hover {
+  background: #f8f4f2;
+  opacity: 0.8;
+}
+
+.axis-item.active {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  opacity: 1;
+  box-shadow: 0 2px 8px rgba(255,36,66,0.3);
+}
+
+.axis-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.axis-item.active .axis-dot {
+  background: rgba(255,255,255,0.3);
+  color: white;
+}
+
+.axis-label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.axis-sub {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.axis-line {
+  width: 20px;
+  height: 2px;
+  background: var(--border);
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+/* 四板块标签 */
+.category-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.cat-tab {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  border-radius: 12px;
+  background: white;
+  color: var(--text-light);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+}
+
+.cat-tab:hover {
+  background: var(--accent);
+  color: var(--primary);
+}
+
+.cat-tab.active {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+}
+
+/* 分类内容列表 */
+.category-list {
+  background: white;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: var(--shadow);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.category-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.category-item:last-child {
+  border-bottom: none;
+}
+
+.category-item:hover {
+  background: #faf7f5;
+  border-radius: 10px;
+}
+
+.cat-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.cat-info {
+  flex: 1;
+}
+
+.cat-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.cat-desc {
+  font-size: 11px;
+  color: var(--text-lighter);
+  line-height: 1.5;
+}
+
+.cat-cost {
+  font-size: 11px;
+  color: var(--primary);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.cat-empty {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-lighter);
+  font-size: 13px;
+}
+
+/* 响应式：结果面板 */
+@media (max-width: 768px) {
+  .result-panel {
+    width: 100%;
+    max-width: 380px;
   }
 
-  .block-card {
+  #v1-content {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .compare-card {
+    padding: 12px;
+  }
+
+  .axis-bar {
     padding: 10px;
+  }
+
+  .axis-label {
+    font-size: 11px;
+  }
+
+  .category-list {
+    max-height: 220px;
   }
 }
