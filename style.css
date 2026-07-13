@@ -1291,7 +1291,25 @@ body {
   40% { transform: scale(1); opacity: 1; }
 }
 
-/* 导入卡片 */
+/* 分享卡片（用户分享收藏的小红书攻略） */
+.share-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 8px;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.share-card:last-child {
+  margin-bottom: 0;
+}
+
+.user-msg .share-card {
+  background: rgba(255,255,255,0.2);
+}
 .import-card {
   background: #f8f4f2;
   border-radius: 12px;

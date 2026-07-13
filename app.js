@@ -380,13 +380,14 @@ function initXiaoai() {
   // 定义对话序列
   const dialogSequence = [
     { msg: 1, type: 'user', delay: 0 },
-    { msg: 2, type: 'ai', delay: 800, typing: 'typing-1', content: 'content-1', step: 1 },
-    { msg: 3, type: 'ai', delay: 2000, typing: 'typing-2', content: 'content-2', step: 2 },
-    { msg: 4, type: 'ai', delay: 4000, typing: 'typing-3', content: 'content-3', step: 3 },
-    { msg: 5, type: 'user', delay: 5500 },
-    { msg: 6, type: 'ai', delay: 6500, typing: 'typing-4', content: 'content-4', step: 4 },
+    { msg: 2, type: 'user', delay: 1200 },
+    { msg: 3, type: 'ai', delay: 2400, typing: 'typing-1', content: 'content-1', step: 1 },
+    { msg: 4, type: 'ai', delay: 4000, typing: 'typing-2', content: 'content-2', step: 2 },
+    { msg: 5, type: 'user', delay: 6000 },
+    { msg: 6, type: 'ai', delay: 7200, typing: 'typing-3', content: 'content-3', step: 3 },
+    { msg: 7, type: 'user', delay: 9000 },
+    { msg: 8, type: 'ai', delay: 10200, typing: 'typing-4', content: 'content-4', step: 4 },
   ];
-
   function resetAnimation() {
     // 重置所有消息
     document.querySelectorAll('.chat-msg').forEach(msg => {
@@ -456,7 +457,7 @@ function initXiaoai() {
         }
 
         // 最后一步显示积木卡片
-        if (item.msg === 6) {
+        if (item.msg === 8) {
           setTimeout(() => {
             blockPanel.classList.add('visible');
           }, 1500);

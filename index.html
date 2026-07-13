@@ -107,30 +107,43 @@
           <div class="chat-area" id="chat-area">
             <div class="chat-date">今天 10:02</div>
 
-            <!-- 用户消息 -->
+            <!-- 用户消息 1：分享收藏的小红书攻略 -->
             <div class="chat-msg user-msg" data-msg="1">
               <div class="msg-bubble">
-                我想去云南玩，预算 <strong>3000</strong> 左右，有推荐吗？🌸
+                我收藏了几篇云南攻略，帮我参考一下做旅行计划 📝
+                <div class="msg-meta" style="margin-top:8px">
+                  <div class="share-card"><span>📎</span> 「大理4天3夜慢旅行」</div>
+                  <div class="share-card"><span>📎</span> 「洱海骑行超全攻略」</div>
+                  <div class="share-card"><span>📎</span> 「玉龙雪山避坑指南」</div>
+                </div>
               </div>
               <div class="msg-avatar">👤</div>
             </div>
 
-            <!-- 小艺回复 1 -->
-            <div class="chat-msg ai-msg" data-msg="2">
+            <!-- 用户消息 2：导入 Skill -->
+            <div class="chat-msg user-msg" data-msg="2">
+              <div class="msg-bubble">
+                对了，还有我收藏的「云南旅行 Skill」也一起导入吧 📚
+              </div>
+              <div class="msg-avatar">👤</div>
+            </div>
+
+            <!-- 小艺回复 1：确认导入 -->
+            <div class="chat-msg ai-msg" data-msg="3">
               <div class="msg-avatar">🤖</div>
               <div class="msg-bubble">
                 <div class="typing-indicator" id="typing-1">
                   <span></span><span></span><span></span>
                 </div>
                 <div class="msg-content" id="content-1" style="display:none">
-                  收到！正在搜索小红书热门笔记... 🔍
-                  <div class="msg-meta">已找到 3 篇相关攻略</div>
+                  收到！正在导入你收藏的小红书资源... 🔍
+                  <div class="msg-meta">解析攻略内容 + 加载 Skill 规则</div>
                 </div>
               </div>
             </div>
 
-            <!-- 小艺回复 2 -->
-            <div class="chat-msg ai-msg" data-msg="3">
+            <!-- 小艺回复 2：导入成功展示 -->
+            <div class="chat-msg ai-msg" data-msg="4">
               <div class="msg-avatar">🤖</div>
               <div class="msg-bubble">
                 <div class="typing-indicator" id="typing-2">
@@ -139,52 +152,65 @@
                 <div class="msg-content" id="content-2" style="display:none">
                   <div class="import-card">
                     <div class="import-title">
-                      <i class="fas fa-file-import"></i> 已导入小红书资源
+                      <i class="fas fa-check-circle"></i> 已成功导入 4 项资源
                     </div>
                     <div class="import-item">
                       <span class="import-icon">📚</span>
                       <span>「云南旅行 Skill」</span>
-                      <span class="import-tag">官方</span>
+                      <span class="import-tag">收藏</span>
                     </div>
                     <div class="import-item">
                       <span class="import-icon">📖</span>
-                      <span>「洱海骑行攻略」</span>
+                      <span>「大理4天3夜慢旅行」</span>
                       <span class="import-tag">2.3w赞</span>
                     </div>
                     <div class="import-item">
                       <span class="import-icon">📖</span>
-                      <span>「玉龙雪山避坑指南」</span>
+                      <span>「洱海骑行超全攻略」</span>
                       <span class="import-tag">1.8w赞</span>
+                    </div>
+                    <div class="import-item">
+                      <span class="import-icon">📖</span>
+                      <span>「玉龙雪山避坑指南」</span>
+                      <span class="import-tag">1.5w赞</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 小艺回复 3 -->
-            <div class="chat-msg ai-msg" data-msg="4">
+            <!-- 用户消息 3：输入预算 -->
+            <div class="chat-msg user-msg" data-msg="5">
+              <div class="msg-bubble">
+                预算 <strong>3000</strong> 左右，帮我安排一下 💰
+              </div>
+              <div class="msg-avatar">👤</div>
+            </div>
+
+            <!-- 小艺回复 3：生成计划 -->
+            <div class="chat-msg ai-msg" data-msg="6">
               <div class="msg-avatar">🤖</div>
               <div class="msg-bubble">
                 <div class="typing-indicator" id="typing-3">
                   <span></span><span></span><span></span>
                 </div>
                 <div class="msg-content" id="content-3" style="display:none">
-                  根据你的预算 <strong>¥3000</strong>，已优化为 <strong>4 天 3 夜</strong> 慢旅行计划 📅
-                  <div class="msg-meta">覆盖大理 + 丽江 · 6 个核心景点</div>
+                  已结合导入的攻略和 Skill，根据预算 <strong>¥3000</strong> 优化为 <strong>4 天 3 夜</strong> 慢旅行计划 📅
+                  <div class="msg-meta">参考 3 篇真实笔记 + Skill 规则引擎</div>
                 </div>
               </div>
             </div>
 
-            <!-- 用户回复 -->
-            <div class="chat-msg user-msg" data-msg="5">
+            <!-- 用户消息 4：查看完整计划 -->
+            <div class="chat-msg user-msg" data-msg="7">
               <div class="msg-bubble">
                 想看看完整计划 👀
               </div>
               <div class="msg-avatar">👤</div>
             </div>
 
-            <!-- 小艺回复 4 -->
-            <div class="chat-msg ai-msg" data-msg="6">
+            <!-- 小艺回复 4：引导积木卡片 -->
+            <div class="chat-msg ai-msg" data-msg="8">
               <div class="msg-avatar">🤖</div>
               <div class="msg-bubble">
                 <div class="typing-indicator" id="typing-4">
@@ -192,7 +218,7 @@
                 </div>
                 <div class="msg-content" id="content-4" style="display:none">
                   已生成！点击右侧积木卡片查看你的旅行计划 👉
-                  <div class="msg-meta">每张卡片可展开详细内容</div>
+                  <div class="msg-meta">时间线 / 地图 / 预算 / 交通</div>
                 </div>
               </div>
             </div>
