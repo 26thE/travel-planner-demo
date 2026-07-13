@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌸 云南旅行计划 | 小红书风格行程助手</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <nav class="top-nav">
+    <div class="nav-brand">
+      <span class="logo">🌸</span>
+      <span class="brand-text">旅行计划助手</span>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn active" data-view="timeline">
+        <i class="fas fa-stream"></i> 时间线
+      </button>
+      <button class="nav-btn" data-view="map">
+        <i class="fas fa-map-marked-alt"></i> 地图
+      </button>
+      <button class="nav-btn" data-view="budget">
+        <i class="fas fa-wallet"></i> 预算
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero 区域 -->
+  <header class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1 id="trip-title"></h1>
+      <p id="trip-subtitle"></p>
+      <div class="hero-tags">
+        <span class="tag"><i class="fas fa-calendar-alt"></i> <span id="trip-dates"></span></span>
+        <span class="tag"><i class="fas fa-user"></i> <span id="trip-travelers"></span>人</span>
+        <span class="tag tag-budget"><i class="fas fa-coins"></i> 预算 <span id="trip-budget"></span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+    <!-- 时间线视图 -->
+    <section id="timeline-view" class="view active">
+      <div class="timeline-container">
+        <div class="timeline-line"></div>
+        <div id="timeline-content"></div>
+      </div>
+    </section>
+
+    <!-- 地图视图 -->
+    <section id="map-view" class="view">
+      <div class="map-wrapper">
+        <div id="map"></div>
+        <div class="map-sidebar">
+          <h3><i class="fas fa-route"></i> 路线指引</h3>
+          <div id="route-guide"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 预算视图 -->
+    <section id="budget-view" class="view">
+      <div class="budget-container">
+        <div class="budget-card total">
+          <div class="budget-circle">
+            <span class="budget-amount" id="budget-total"></span>
+            <span class="budget-label">总预算</span>
+          </div>
+        </div>
+        <div class="budget-chart" id="budget-chart"></div>
+        <div class="budget-breakdown" id="budget-breakdown"></div>
+        <div class="budget-tips">
+          <h3><i class="fas fa-lightbulb"></i> 小红书省钱攻略</h3>
+          <div id="budget-tips-list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 详情弹窗 -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- 底部提示 -->
+  <footer class="footer">
+    <p>💡 基于小红书真实笔记整理 | 预算可根据实际情况调整</p>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
