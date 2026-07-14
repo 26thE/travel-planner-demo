@@ -1813,14 +1813,6 @@ body {
   max-height: 180px;
   overflow-y: auto;
 }
-.category-list {
-  background: white;
-  border-radius: 16px;
-  padding: 12px;
-  box-shadow: var(--shadow);
-  max-height: 280px;
-  overflow-y: auto;
-}
 
 .category-item {
   display: flex;

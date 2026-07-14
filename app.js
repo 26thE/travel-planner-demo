@@ -423,6 +423,16 @@ function initXiaoai() {
       if (v2Cat === 'play') {
         items = [...dayData.play, ...dayData.transport];
       }
+      // 如果住为空，向前查找最近的住宿记录
+      if (v2Cat === 'stay' && (!items || items.length === 0)) {
+        for (let d = v2Day - 1; d >= 1; d--) {
+          const prevDay = CATEGORIZED_DATA.byDay[d];
+          if (prevDay && prevDay.stay && prevDay.stay.length > 0) {
+            items = prevDay.stay;
+            break;
+          }
+        }
+      }
       renderCategoryList(document.getElementById('day-list'), items);
     }
     document.querySelectorAll('#day-axis .axis-item').forEach(el => {
