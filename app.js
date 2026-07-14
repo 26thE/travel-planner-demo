@@ -556,7 +556,7 @@ function initXiaoai() {
     document.querySelectorAll('.typing-indicator').forEach(t => t.style.display = 'none');
     document.querySelectorAll('.msg-content').forEach(c => c.style.display = 'block');
 
-    resultPanel.classList.remove('visible');
+    // resultPanel.classList.remove('visible');
 
     flowSteps.forEach(s => {
       s.classList.remove('active', 'completed');
@@ -646,6 +646,17 @@ function initXiaoai() {
   }
 
   // 保险：3秒后如果卡片还没显示，直接展示（防止动画被中断）
+  setTimeout(() => {
+    if (!resultPanel.classList.contains('visible')) {
+      resultPanel.classList.add('visible');
+      renderV2();
+    }
+  }, 3000);
+
+  // 初始化预渲染内容
+  renderV2();
+  renderV3();
+}
   setTimeout(() => {
     if (!resultPanel.classList.contains('visible')) {
       resultPanel.classList.add('visible');
