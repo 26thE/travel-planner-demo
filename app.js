@@ -417,7 +417,7 @@ function initXiaoai() {
     document.querySelectorAll('#day-axis .axis-item').forEach(el => {
       el.classList.toggle('active', parseInt(el.dataset.day) === v2Day);
     });
-    document.querySelectorAll('#day-categories .cat-tab').forEach(el => {
+    document.querySelectorAll('#day-categories .cat-card').forEach(el => {
       el.classList.toggle('active', el.dataset.cat === v2Cat);
     });
   }
@@ -431,7 +431,7 @@ function initXiaoai() {
     document.querySelectorAll('#place-axis .axis-item').forEach(el => {
       el.classList.toggle('active', el.dataset.place === v3Place);
     });
-    document.querySelectorAll('#place-categories .cat-tab').forEach(el => {
+    document.querySelectorAll('#place-categories .cat-card').forEach(el => {
       el.classList.toggle('active', el.dataset.cat === v3Cat);
     });
   }
@@ -458,7 +458,7 @@ function initXiaoai() {
   });
 
   // 版本2：四板块
-  document.querySelectorAll('#day-categories .cat-tab').forEach(el => {
+  document.querySelectorAll('#day-categories .cat-card').forEach(el => {
     el.addEventListener('click', () => {
       v2Cat = el.dataset.cat;
       renderV2();
@@ -474,36 +474,10 @@ function initXiaoai() {
   });
 
   // 版本3：四板块
-  document.querySelectorAll('#place-categories .cat-tab').forEach(el => {
+  document.querySelectorAll('#place-categories .cat-card').forEach(el => {
     el.addEventListener('click', () => {
       v3Cat = el.dataset.cat;
       renderV3();
-    });
-  });
-
-  // 版本1：对比卡片点击
-  document.querySelectorAll('.compare-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const cardType = card.dataset.card;
-      const navButtons = document.querySelectorAll('.nav-btn');
-      navButtons.forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-
-      if (cardType === 'experience') {
-        const timelineBtn = document.querySelector('[data-view="timeline"]');
-        if (timelineBtn) timelineBtn.classList.add('active');
-        document.getElementById('timeline-view').classList.add('active');
-      } else if (cardType === 'route') {
-        const mapBtn = document.querySelector('[data-view="map"]');
-        if (mapBtn) mapBtn.classList.add('active');
-        document.getElementById('map-view').classList.add('active');
-        setTimeout(initMap, 100);
-      } else {
-        const targetBtn = document.querySelector(`[data-view="${cardType}"]`);
-        if (targetBtn) targetBtn.classList.add('active');
-        document.getElementById(`${cardType}-view`).classList.add('active');
-        if (cardType === 'map') setTimeout(initMap, 100);
-      }
     });
   });
 
