@@ -1770,10 +1770,6 @@ body {
   background: linear-gradient(90deg, #10b981, #34d399);
 }
 
-.cat-card[data-cat="transport"]::before {
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
-}
-
 .cat-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-hover);

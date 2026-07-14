@@ -412,6 +412,42 @@ function initXiaoai() {
   function renderV2() {
     const dayData = CATEGORIZED_DATA.byDay[v2Day];
     if (dayData) {
+      let items = dayData[v2Cat];
+      // 玩乐行：合并 play + transport
+      if (v2Cat === 'play') {
+        items = [...dayData.play, ...dayData.transport];
+      }
+      renderCategoryList(document.getElementById('day-list'), items);
+    }
+    document.querySelectorAll('#day-axis .axis-item').forEach(el => {
+      el.classList.toggle('active', parseInt(el.dataset.day) === v2Day);
+    });
+    document.querySelectorAll('#day-categories .cat-card').forEach(el => {
+      el.classList.toggle('active', el.dataset.cat === v2Cat);
+    });
+  }
+
+  // 渲染版本3
+  function renderV3() {
+    const placeData = CATEGORIZED_DATA.byPlace[v3Place];
+    if (placeData) {
+      let items = placeData[v3Cat];
+      // 玩乐行：合并 play + transport
+      if (v3Cat === 'play') {
+        items = [...placeData.play, ...placeData.transport];
+      }
+      renderCategoryList(document.getElementById('place-list'), items);
+    }
+    document.querySelectorAll('#place-axis .axis-item').forEach(el => {
+      el.classList.toggle('active', el.dataset.place === v3Place);
+    });
+    document.querySelectorAll('#place-categories .cat-card').forEach(el => {
+      el.classList.toggle('active', el.dataset.cat === v3Cat);
+    });
+  }
+  function renderV2() {
+    const dayData = CATEGORIZED_DATA.byDay[v2Day];
+    if (dayData) {
       renderCategoryList(document.getElementById('day-list'), dayData[v2Cat]);
     }
     document.querySelectorAll('#day-axis .axis-item').forEach(el => {
