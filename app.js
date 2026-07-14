@@ -417,7 +417,9 @@ function initXiaoai() {
 
   // 渲染版本2
   function renderV2() {
+    console.log('[debug] renderV2 called, v2Day=', v2Day, 'v2Cat=', v2Cat);
     const dayData = CATEGORIZED_DATA.byDay[v2Day];
+    console.log('[debug] dayData=', dayData);
     if (dayData) {
       let items = dayData[v2Cat];
       if (v2Cat === 'play') {
@@ -446,7 +448,9 @@ function initXiaoai() {
 
   // 渲染版本3
   function renderV3() {
+    console.log('[debug] renderV3 called, v3Place=', v3Place, 'v3Cat=', v3Cat);
     const placeData = CATEGORIZED_DATA.byPlace[v3Place];
+    console.log('[debug] placeData=', placeData);
     if (placeData) {
       let items = placeData[v3Cat];
       if (v3Cat === 'play') {
@@ -479,6 +483,7 @@ function initXiaoai() {
   // 版本2：时间线轴（绑定所有带 data-day 的 axis-item，包括机框内外）
   document.querySelectorAll('.axis-item[data-day]').forEach(el => {
     el.addEventListener('click', () => {
+      console.log('[debug] day clicked:', el.dataset.day);
       v2Day = parseInt(el.dataset.day);
       renderV2();
     });
@@ -495,6 +500,7 @@ function initXiaoai() {
   // 版本3：地点线（绑定所有带 data-place 的 axis-item，包括机框内外）
   document.querySelectorAll('.axis-item[data-place]').forEach(el => {
     el.addEventListener('click', () => {
+      console.log('[debug] place clicked:', el.dataset.place);
       v3Place = el.dataset.place;
       renderV3();
     });
