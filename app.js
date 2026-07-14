@@ -533,6 +533,104 @@ function initXiaoai() {
   }
 
   // 定义对话序列
+  let timers = [];
+
+  function clearAllTimers() {
+    timers.forEach(t => clearTimeout(t));
+    timers = [];
+  }
+
+  const dialogSequence = [
+    { msg: 1, type: 'user', delay: 0 },
+    { msg: 2, type: 'user', delay: 2000 },
+    { msg: 3, type: 'ai', delay: 4500, typing: 'typing-1', content: 'content-1', step: 1 },
+    { msg: 4, type: 'ai', delay: 7500, typing: 'typing-2', content: 'content-2', step: 2 },
+    { msg: 5, type: 'user', delay: 11000 },
+    { msg: 6, type: 'ai', delay: 14500, typing: 'typing-3', content: 'content-3', step: 3 },
+    { msg: 7, type: 'user', delay: 19000 },
+    { msg: 8, type: 'ai', delay: 23000, typing: 'typing-4', content: 'content-4', step: 4 },
+  ];
+
+  function resetAnimation() {
+    clearAllTimers();
+
+    document.querySelectorAll('.chat-msg').forEach(msg => {
+      msg.style.opacity = '0';
+      msg.style.transform = 'translateY(10px)';
+      msg.style.animation = 'none';
+    });
+
+    // 默认显示内容、隐藏打字机
+    document.querySelectorAll('.typing-indicator').forEach(t => t.style.display = 'none');
+    document.querySelectorAll('.msg-content').forEach(c => c.style.display = 'block');
+
+    flowSteps.forEach(s => {
+      s.classList.remove('active', 'completed');
+    });
+    if (flowSteps[0]) flowSteps[0].classList.add('active');
+
+    // 重置阶段tab为旅行中
+    document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+    const duringTab = document.querySelector('.phase-tab[data-phase="during"]');
+    if (duringTab) duringTab.classList.add('active');
+    document.querySelectorAll('.phase-content').forEach(c => c.classList.remove('active'));
+    const duringContent = document.getElementById('during-content');
+    if (duringContent) duringContent.classList.add('active');
+
+    chatArea.scrollTop = 0;
+  }
+
+  function playAnimation() {
+    resetAnimation();
+
+    dialogSequence.forEach(item => {
+      const timer = setTimeout(() => {
+        const msgEl = document.querySelector(`.chat-msg[data-msg="${item.msg}"]`);
+        if (!msgEl) return;
+
+        // 先设为 none 再重新设置，确保浏览器重新触发动画
+        msgEl.style.animation = 'none';
+        msgEl.offsetHeight; // 强制重排
+        msgEl.style.animation = 'msgAppear 0.4s ease forwards';
+
+        if (item.type === 'ai' && item.typing && item.content) {
+          const typingEl = document.getElementById(item.typing);
+          const contentEl = document.getElementById(item.content);
+
+          // 先显示打字机、隐藏内容
+          if (typingEl) typingEl.style.display = 'flex';
+          if (contentEl) contentEl.style.display = 'none';
+
+          // 1.2秒后显示内容、隐藏打字机
+          const typingTimer = setTimeout(() => {
+            if (typingEl) typingEl.style.display = 'none';
+            if (contentEl) contentEl.style.display = 'block';
+          }, 1200);
+          timers.push(typingTimer);
+        }
+
+        if (item.step) {
+          flowSteps.forEach((s, idx) => {
+            if (idx < item.step - 1) {
+              s.classList.add('completed');
+              s.classList.remove('active');
+            } else if (idx === item.step - 1) {
+              s.classList.add('active');
+            }
+          });
+        }
+
+        if (item.msg === 8) {
+          const finalTimer = setTimeout(() => {
+            resultPanel.classList.add('visible');
+            renderV2();
+          }, 1500);
+          timers.push(finalTimer);
+        }
+      }, item.delay);
+      timers.push(timer);
+    });
+  }
   const dialogSequence = [
     { msg: 1, type: 'user', delay: 0 },
     { msg: 2, type: 'user', delay: 2000 },
@@ -656,11 +754,4 @@ function initXiaoai() {
   // 初始化预渲染内容
   renderV2();
   renderV3();
-}
-  setTimeout(() => {
-    if (!resultPanel.classList.contains('visible')) {
-      resultPanel.classList.add('visible');
-      renderV2();
-    }
-  }, 3000);
 }

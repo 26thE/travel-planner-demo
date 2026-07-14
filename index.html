@@ -109,6 +109,7 @@
 
             <!-- 用户消息 1：分享收藏的小红书攻略 -->
             <div class="chat-msg user-msg" data-msg="1">
+              <div class="msg-avatar">👤</div>
               <div class="msg-bubble">
                 我收藏了几篇云南攻略，帮我参考一下做旅行计划 📝
                 <div class="msg-meta" style="margin-top:8px">
@@ -117,15 +118,14 @@
                   <div class="share-card"><span>📎</span> 「玉龙雪山避坑指南」</div>
                 </div>
               </div>
-              <div class="msg-avatar">👤</div>
             </div>
 
             <!-- 用户消息 2：导入 Skill -->
             <div class="chat-msg user-msg" data-msg="2">
+              <div class="msg-avatar">👤</div>
               <div class="msg-bubble">
                 对了，还有我收藏的「云南旅行 Skill」也一起导入吧 📚
               </div>
-              <div class="msg-avatar">👤</div>
             </div>
 
             <!-- 小艺回复 1：确认导入 -->
@@ -181,10 +181,10 @@
 
             <!-- 用户消息 3：输入预算 -->
             <div class="chat-msg user-msg" data-msg="5">
+              <div class="msg-avatar">👤</div>
               <div class="msg-bubble">
                 预算 <strong>3000</strong> 左右，帮我安排一下 💰
               </div>
-              <div class="msg-avatar">👤</div>
             </div>
 
             <!-- 小艺回复 3：生成计划 -->
@@ -203,10 +203,10 @@
 
             <!-- 用户消息 4：查看完整计划 -->
             <div class="chat-msg user-msg" data-msg="7">
+              <div class="msg-avatar">👤</div>
               <div class="msg-bubble">
                 想看看完整计划 👀
               </div>
-              <div class="msg-avatar">👤</div>
             </div>
 
             <!-- 小艺回复 4：引导积木卡片 -->
@@ -232,9 +232,19 @@
           </div>
         </div>
 
-        <!-- 生成结果面板（旅行三阶段） -->
-        <div class="result-panel" id="result-panel">
-          <!-- 旅行阶段大tab -->
+        <!-- 生成结果面板（手机机框中） -->
+        <div class="phone-mockup result-phone">
+          <div class="phone-statusbar">
+            <span class="phone-time">10:08</span>
+            <div class="phone-notch"></div>
+            <div class="phone-icons">
+              <i class="fas fa-signal"></i>
+              <i class="fas fa-wifi"></i>
+              <i class="fas fa-battery-full"></i>
+            </div>
+          </div>
+          <div class="result-panel" id="result-panel">
+            <!-- 旅行阶段大tab -->
           <div class="phase-tabs">
             <button class="phase-tab" data-phase="pre">旅游前</button>
             <button class="phase-tab active" data-phase="during">旅行中</button>
