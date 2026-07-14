@@ -125,10 +125,10 @@ function initMap() {
   // 中心点：大理和丽江中间
   map = L.map('map').setView([26.3, 100.2], 8);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd',
-    maxZoom: 19
+  L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+    attribution: '&copy; <a href="https://www.amap.com">高德地图</a>',
+    subdomains: '1234',
+    maxZoom: 18
   }).addTo(map);
 
   // 绘制路线
