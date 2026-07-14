@@ -406,27 +406,53 @@
           <!-- 抽象地图路线卡片 -->
           <div class="abstract-map-card">
             <h4><i class="fas fa-route"></i> 路线示意</h4>
-            <svg class="abstract-map-svg" viewBox="0 0 300 120">
+            <svg class="abstract-map-svg" viewBox="0 0 340 200">
+              <!-- 大理区域 -->
               <!-- 大理古城 -->
-              <circle cx="60" cy="60" r="8" fill="#ff2442"/>
-              <text x="60" y="85" text-anchor="middle" font-size="11" fill="#333">大理古城</text>
-              <!-- 洱海 -->
-              <circle cx="140" cy="40" r="5" fill="#ff6b8a"/>
-              <text x="140" y="25" text-anchor="middle" font-size="10" fill="#666">洱海</text>
+              <circle cx="60" cy="160" r="8" fill="#ff2442"/>
+              <text x="60" y="182" text-anchor="middle" font-size="11" fill="#333">大理古城</text>
+              <!-- 龙龛码头 -->
+              <circle cx="60" cy="120" r="5" fill="#ff6b8a"/>
+              <text x="60" y="110" text-anchor="middle" font-size="10" fill="#666">龙龛码头</text>
+              <!-- 磻溪S弯 -->
+              <circle cx="110" cy="90" r="5" fill="#ff6b8a"/>
+              <text x="110" y="80" text-anchor="middle" font-size="10" fill="#666">磻溪S弯</text>
+              <!-- 喜洲古镇 -->
+              <circle cx="160" cy="70" r="5" fill="#ff6b8a"/>
+              <text x="160" y="60" text-anchor="middle" font-size="10" fill="#666">喜洲古镇</text>
+              <!-- 双廊古镇 -->
+              <circle cx="220" cy="60" r="5" fill="#ff6b8a"/>
+              <text x="220" y="50" text-anchor="middle" font-size="10" fill="#666">双廊古镇</text>
+
+              <!-- 丽江区域 -->
               <!-- 丽江古城 -->
-              <circle cx="240" cy="60" r="8" fill="#ff2442"/>
-              <text x="240" y="85" text-anchor="middle" font-size="11" fill="#333">丽江古城</text>
+              <circle cx="280" cy="160" r="8" fill="#ff2442"/>
+              <text x="280" y="182" text-anchor="middle" font-size="11" fill="#333">丽江古城</text>
               <!-- 玉龙雪山 -->
-              <circle cx="240" cy="30" r="5" fill="#ff6b8a"/>
-              <text x="240" y="18" text-anchor="middle" font-size="10" fill="#666">玉龙雪山</text>
-              <!-- 连线 -->
-              <path d="M60 60 Q100 50 140 40" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
-              <path d="M140 40 Q190 50 240 60" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
-              <path d="M240 60 L240 30" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+              <circle cx="280" cy="100" r="5" fill="#ff6b8a"/>
+              <text x="280" y="90" text-anchor="middle" font-size="10" fill="#666">玉龙雪山</text>
+              <!-- 蓝月谷 -->
+              <circle cx="300" cy="125" r="4" fill="#4fc3f7"/>
+              <text x="300" y="140" text-anchor="middle" font-size="9" fill="#0288d1">蓝月谷</text>
+
+              <!-- 大理环海路线 -->
+              <path d="M60 160 L60 120" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+              <path d="M60 120 Q85 105 110 90" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+              <path d="M110 90 Q135 80 160 70" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+              <path d="M160 70 Q190 65 220 60" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+              <path d="M220 60 Q200 80 180 100 Q120 130 60 160" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+
+              <!-- 大理→丽江 动车线 -->
+              <path d="M60 160 Q170 140 280 160" stroke="#ff2442" stroke-width="2" fill="none" stroke-dasharray="6,3"/>
+              <text x="170" y="155" text-anchor="middle" font-size="10" fill="#ff2442">🚄 动车约2h</text>
+
+              <!-- 丽江→玉龙雪山 -->
+              <path d="M280 160 L280 100" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+              <path d="M280 100 L300 125" stroke="#4fc3f7" stroke-width="1.5" fill="none" stroke-dasharray="3,2"/>
             </svg>
             <div class="abstract-map-info">
-              <span><i class="fas fa-road"></i> 大理 ↔ 丽江 约180km</span>
-              <span><i class="fas fa-train"></i> 动车约2小时</span>
+              <span><i class="fas fa-road"></i> 环海约120km</span>
+              <span><i class="fas fa-train"></i> 大理↔丽江 约180km</span>
             </div>
           </div>
         </div>
