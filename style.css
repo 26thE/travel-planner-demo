@@ -1724,8 +1724,8 @@ body {
 /* 四板块标签 */
 .category-tabs {
   display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .cat-card {
@@ -1734,8 +1734,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 16px 0;
+  gap: 8px;
+  padding: 18px 0;
   border-radius: 16px;
   background: white;
   color: var(--text-light);
@@ -1744,20 +1744,53 @@ body {
   cursor: pointer;
   transition: var(--transition);
   box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.cat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 16px 16px 0 0;
+}
+
+.cat-card[data-cat="play"]::before {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.cat-card[data-cat="food"]::before {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.cat-card[data-cat="stay"]::before {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.cat-card[data-cat="transport"]::before {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
 }
 
 .cat-card:hover {
-  background: var(--accent);
-  color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
 }
 
 .cat-card.active {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
+  box-shadow: 0 4px 16px rgba(255,36,66,0.3);
+}
+
+.cat-card.active::before {
+  opacity: 0.5;
 }
 
 .cat-card-icon {
-  font-size: 24px;
+  font-size: 28px;
 }
 
 .cat-card-title {
