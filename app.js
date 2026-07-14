@@ -525,13 +525,13 @@ function initXiaoai() {
   // 定义对话序列
   const dialogSequence = [
     { msg: 1, type: 'user', delay: 0 },
-    { msg: 2, type: 'user', delay: 1200 },
-    { msg: 3, type: 'ai', delay: 2400, typing: 'typing-1', content: 'content-1', step: 1 },
-    { msg: 4, type: 'ai', delay: 4000, typing: 'typing-2', content: 'content-2', step: 2 },
-    { msg: 5, type: 'user', delay: 6000 },
-    { msg: 6, type: 'ai', delay: 7200, typing: 'typing-3', content: 'content-3', step: 3 },
-    { msg: 7, type: 'user', delay: 9000 },
-    { msg: 8, type: 'ai', delay: 10200, typing: 'typing-4', content: 'content-4', step: 4 },
+    { msg: 2, type: 'user', delay: 2000 },
+    { msg: 3, type: 'ai', delay: 4500, typing: 'typing-1', content: 'content-1', step: 1 },
+    { msg: 4, type: 'ai', delay: 7500, typing: 'typing-2', content: 'content-2', step: 2 },
+    { msg: 5, type: 'user', delay: 11000 },
+    { msg: 6, type: 'ai', delay: 14500, typing: 'typing-3', content: 'content-3', step: 3 },
+    { msg: 7, type: 'user', delay: 19000 },
+    { msg: 8, type: 'ai', delay: 23000, typing: 'typing-4', content: 'content-4', step: 4 },
   ];
 
   function resetAnimation() {
@@ -577,8 +577,6 @@ function initXiaoai() {
         msgEl.offsetHeight; // 强制重排
         msgEl.style.animation = 'msgAppear 0.4s ease forwards';
 
-        chatArea.scrollTop = chatArea.scrollHeight;
-
         if (item.type === 'ai' && item.typing && item.content) {
           const typingEl = document.getElementById(item.typing);
           const contentEl = document.getElementById(item.content);
@@ -591,7 +589,6 @@ function initXiaoai() {
           setTimeout(() => {
             if (typingEl) typingEl.style.display = 'none';
             if (contentEl) contentEl.style.display = 'block';
-            chatArea.scrollTop = chatArea.scrollHeight;
           }, 1200);
         }
 
