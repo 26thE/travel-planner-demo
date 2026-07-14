@@ -616,4 +616,19 @@ function initXiaoai() {
     }
   });
   observer.observe(xiaoaiView, { attributes: true, attributeFilter: ['class'] });
+
+  // 如果初始已经是 active（默认视图），直接播放动画
+  if (xiaoaiView.classList.contains('active') && !hasPlayed) {
+    hasPlayed = true;
+    setTimeout(playAnimation, 300);
+  }
+}
+  const xiaoaiView = document.getElementById('xiaoai-view');
+  const observer = new MutationObserver(() => {
+    if (xiaoaiView.classList.contains('active') && !hasPlayed) {
+      hasPlayed = true;
+      setTimeout(playAnimation, 300);
+    }
+  });
+  observer.observe(xiaoaiView, { attributes: true, attributeFilter: ['class'] });
 }
