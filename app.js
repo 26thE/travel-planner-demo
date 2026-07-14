@@ -435,7 +435,7 @@ function initXiaoai() {
       }
       renderCategoryList(document.getElementById('day-list'), items);
     }
-    document.querySelectorAll('#day-axis .axis-item').forEach(el => {
+    document.querySelectorAll('#outside-day-axis .axis-item').forEach(el => {
       el.classList.toggle('active', parseInt(el.dataset.day) === v2Day);
     });
     document.querySelectorAll('#day-categories .cat-card').forEach(el => {
@@ -453,7 +453,7 @@ function initXiaoai() {
       }
       renderCategoryList(document.getElementById('place-list'), items);
     }
-    document.querySelectorAll('#place-axis .axis-item').forEach(el => {
+    document.querySelectorAll('#outside-place-axis .axis-item').forEach(el => {
       el.classList.toggle('active', el.dataset.place === v3Place);
     });
     document.querySelectorAll('#place-categories .cat-card').forEach(el => {
@@ -481,7 +481,7 @@ function initXiaoai() {
   });
 
   // 版本2：时间线轴
-  document.querySelectorAll('#day-axis .axis-item').forEach(el => {
+  document.querySelectorAll('#outside-day-axis .axis-item').forEach(el => {
     el.addEventListener('click', () => {
       v2Day = parseInt(el.dataset.day);
       renderV2();
@@ -497,7 +497,7 @@ function initXiaoai() {
   });
 
   // 版本3：地点线
-  document.querySelectorAll('#place-axis .axis-item').forEach(el => {
+  document.querySelectorAll('#outside-place-axis .axis-item').forEach(el => {
     el.addEventListener('click', () => {
       v3Place = el.dataset.place;
       renderV3();
