@@ -371,6 +371,8 @@ function closeModal() {
 }
 
 // ========== 小艺生成视图 ==========
+
+// ========== 小艺生成视图 ==========
 function initXiaoai() {
   const chatArea = document.getElementById('chat-area');
   const resultPanel = document.getElementById('result-panel');
@@ -413,7 +415,6 @@ function initXiaoai() {
     const dayData = CATEGORIZED_DATA.byDay[v2Day];
     if (dayData) {
       let items = dayData[v2Cat];
-      // 玩乐行：合并 play + transport
       if (v2Cat === 'play') {
         items = [...dayData.play, ...dayData.transport];
       }
@@ -432,7 +433,6 @@ function initXiaoai() {
     const placeData = CATEGORIZED_DATA.byPlace[v3Place];
     if (placeData) {
       let items = placeData[v3Cat];
-      // 玩乐行：合并 play + transport
       if (v3Cat === 'play') {
         items = [...placeData.play, ...placeData.transport];
       }
@@ -444,6 +444,8 @@ function initXiaoai() {
     document.querySelectorAll('#place-categories .cat-card').forEach(el => {
       el.classList.toggle('active', el.dataset.cat === v3Cat);
     });
+  }
+
   // 版本切换标签
   document.querySelectorAll('.v-tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -531,8 +533,9 @@ function initXiaoai() {
       msg.style.animation = 'none';
     });
 
-    document.querySelectorAll('.typing-indicator').forEach(t => t.style.display = 'flex');
-    document.querySelectorAll('.msg-content').forEach(c => c.style.display = 'none');
+    // 默认显示内容、隐藏打字机（fallback：即使动画失败也能看到内容）
+    document.querySelectorAll('.typing-indicator').forEach(t => t.style.display = 'none');
+    document.querySelectorAll('.msg-content').forEach(c => c.style.display = 'block');
 
     resultPanel.classList.remove('visible');
 
@@ -570,9 +573,11 @@ function initXiaoai() {
           const typingEl = document.getElementById(item.typing);
           const contentEl = document.getElementById(item.content);
 
+          // 先显示打字机、隐藏内容
           if (typingEl) typingEl.style.display = 'flex';
           if (contentEl) contentEl.style.display = 'none';
 
+          // 1.2秒后显示内容、隐藏打字机
           setTimeout(() => {
             if (typingEl) typingEl.style.display = 'none';
             if (contentEl) contentEl.style.display = 'block';
@@ -622,13 +627,12 @@ function initXiaoai() {
     hasPlayed = true;
     setTimeout(playAnimation, 300);
   }
-}
-  const xiaoaiView = document.getElementById('xiaoai-view');
-  const observer = new MutationObserver(() => {
-    if (xiaoaiView.classList.contains('active') && !hasPlayed) {
-      hasPlayed = true;
-      setTimeout(playAnimation, 300);
+
+  // 保险：3秒后如果卡片还没显示，直接展示（防止动画被中断）
+  setTimeout(() => {
+    if (!resultPanel.classList.contains('visible')) {
+      resultPanel.classList.add('visible');
+      renderV2();
     }
-  });
-  observer.observe(xiaoaiView, { attributes: true, attributeFilter: ['class'] });
+  }, 3000);
 }
