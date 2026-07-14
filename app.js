@@ -444,34 +444,6 @@ function initXiaoai() {
     document.querySelectorAll('#place-categories .cat-card').forEach(el => {
       el.classList.toggle('active', el.dataset.cat === v3Cat);
     });
-  }
-  function renderV2() {
-    const dayData = CATEGORIZED_DATA.byDay[v2Day];
-    if (dayData) {
-      renderCategoryList(document.getElementById('day-list'), dayData[v2Cat]);
-    }
-    document.querySelectorAll('#day-axis .axis-item').forEach(el => {
-      el.classList.toggle('active', parseInt(el.dataset.day) === v2Day);
-    });
-    document.querySelectorAll('#day-categories .cat-card').forEach(el => {
-      el.classList.toggle('active', el.dataset.cat === v2Cat);
-    });
-  }
-
-  // 渲染版本3
-  function renderV3() {
-    const placeData = CATEGORIZED_DATA.byPlace[v3Place];
-    if (placeData) {
-      renderCategoryList(document.getElementById('place-list'), placeData[v3Cat]);
-    }
-    document.querySelectorAll('#place-axis .axis-item').forEach(el => {
-      el.classList.toggle('active', el.dataset.place === v3Place);
-    });
-    document.querySelectorAll('#place-categories .cat-card').forEach(el => {
-      el.classList.toggle('active', el.dataset.cat === v3Cat);
-    });
-  }
-
   // 版本切换标签
   document.querySelectorAll('.v-tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -493,7 +465,7 @@ function initXiaoai() {
     });
   });
 
-  // 版本2：四板块
+  // 版本2：三板块
   document.querySelectorAll('#day-categories .cat-card').forEach(el => {
     el.addEventListener('click', () => {
       v2Cat = el.dataset.cat;
@@ -509,13 +481,36 @@ function initXiaoai() {
     });
   });
 
-  // 版本3：四板块
+  // 版本3：三板块
   document.querySelectorAll('#place-categories .cat-card').forEach(el => {
     el.addEventListener('click', () => {
       v3Cat = el.dataset.cat;
       renderV3();
     });
   });
+
+  // 旅行阶段大tab切换
+  document.querySelectorAll('.phase-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const phase = tab.dataset.phase;
+      document.querySelectorAll('.phase-content').forEach(c => c.classList.remove('active'));
+      document.getElementById(`${phase}-content`).classList.add('active');
+    });
+  });
+
+  // 跳转地图按钮
+  const gotoMapBtn = document.getElementById('goto-map-btn');
+  if (gotoMapBtn) {
+    gotoMapBtn.addEventListener('click', () => {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.nav-btn[data-view="map"]').classList.add('active');
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('map-view').classList.add('active');
+      setTimeout(initMap, 100);
+    });
+  }
 
   // 定义对话序列
   const dialogSequence = [
@@ -545,6 +540,14 @@ function initXiaoai() {
       s.classList.remove('active', 'completed');
     });
     if (flowSteps[0]) flowSteps[0].classList.add('active');
+
+    // 重置阶段tab为旅行中
+    document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+    const duringTab = document.querySelector('.phase-tab[data-phase="during"]');
+    if (duringTab) duringTab.classList.add('active');
+    document.querySelectorAll('.phase-content').forEach(c => c.classList.remove('active'));
+    const duringContent = document.getElementById('during-content');
+    if (duringContent) duringContent.classList.add('active');
 
     chatArea.scrollTop = 0;
   }
@@ -591,6 +594,7 @@ function initXiaoai() {
         if (item.msg === 8) {
           setTimeout(() => {
             resultPanel.classList.add('visible');
+            renderV2();
           }, 1500);
         }
       }, item.delay);

@@ -1886,3 +1886,243 @@ body {
     max-height: 220px;
   }
 }
+
+/* ========== 旅行三阶段 Tab ========== */
+.phase-tabs {
+  display: flex;
+  gap: 8px;
+  background: white;
+  border-radius: 20px;
+  padding: 4px;
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+}
+
+.phase-tab {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--text-light);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.phase-tab:hover {
+  background: #f8f4f2;
+}
+
+.phase-tab.active {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  box-shadow: 0 2px 8px rgba(255,36,66,0.3);
+}
+
+.phase-content {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.phase-content.active {
+  display: block;
+}
+
+/* ========== 旅游前：Checklist ========== */
+.checklist-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.checklist-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary);
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.checklist-item:last-child {
+  border-bottom: none;
+}
+
+.checklist-item:hover {
+  color: var(--primary);
+}
+
+.checklist-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.checklist-item label {
+  cursor: pointer;
+  flex: 1;
+}
+
+.checklist-item input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+  color: var(--text-lighter);
+}
+
+/* ========== 旅行后：Review ========== */
+.review-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.review-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary);
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.photo-item {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8f4f2, #fff0f3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--text-light);
+  font-weight: 500;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.photo-item:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-hover);
+}
+
+.review-notes {
+  margin-bottom: 16px;
+}
+
+.review-notes h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-light);
+}
+
+.note-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: #faf7f5;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  transition: var(--transition);
+}
+
+.note-item:hover {
+  background: #fff0f3;
+}
+
+.note-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  box-shadow: var(--shadow);
+}
+
+.note-text {
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.review-discuss h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-light);
+}
+
+.discuss-input {
+  padding: 10px 14px;
+  border-radius: 20px;
+  background: #f5f5f7;
+  font-size: 12px;
+  color: var(--text-lighter);
+  cursor: text;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.discuss-input:hover {
+  border-color: var(--accent);
+  background: white;
+}
+
+/* ========== 跳转地图按钮 ========== */
+.goto-map-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+}
+
+.goto-map-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16,185,129,0.4);
+}
+
+.goto-map-btn i {
+  font-size: 16px;
+}
