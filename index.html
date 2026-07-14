@@ -232,181 +232,206 @@
           </div>
         </div>
 
-        <!-- 生成结果面板（手机机框中） -->
-        <div class="phone-mockup result-phone">
-          <div class="phone-statusbar">
-            <span class="phone-time">10:08</span>
-            <div class="phone-notch"></div>
-            <div class="phone-icons">
-              <i class="fas fa-signal"></i>
-              <i class="fas fa-wifi"></i>
-              <i class="fas fa-battery-full"></i>
-            </div>
-          </div>
-          <div class="result-panel" id="result-panel">
-            <!-- 旅行阶段大tab -->
-          <div class="phase-tabs">
+        <!-- 生成结果复合区域 -->
+        <div class="result-composite">
+          <!-- 旅行阶段大tab（移出手机） -->
+          <div class="phase-tabs" id="outside-phase-tabs">
             <button class="phase-tab" data-phase="pre">旅游前</button>
             <button class="phase-tab active" data-phase="during">旅行中</button>
             <button class="phase-tab" data-phase="post">旅行后</button>
           </div>
 
-          <!-- 旅游前 -->
-          <div class="phase-content" id="pre-content">
-            <div class="checklist-card">
-              <h3>旅行准备清单</h3>
-              <div class="checklist-item">
-                <input type="checkbox" id="check-hotel" />
-                <label for="check-hotel">已定好酒店/客栈</label>
+          <!-- 版本切换标签（移出手机，仅旅行中显示） -->
+          <div class="version-tabs" id="outside-version-tabs">
+            <button class="v-tab active" data-version="v2">时间线轴</button>
+            <button class="v-tab" data-version="v3">地点线</button>
+          </div>
+
+          <!-- 时间线轴（移出手机） -->
+          <div class="axis-bar" id="outside-day-axis">
+            <div class="axis-item active" data-day="1">
+              <div class="axis-dot">1</div>
+              <div class="axis-label">5月1日</div>
+              <div class="axis-sub">大理</div>
+            </div>
+            <div class="axis-line"></div>
+            <div class="axis-item" data-day="2">
+              <div class="axis-dot">2</div>
+              <div class="axis-label">5月2日</div>
+              <div class="axis-sub">大理</div>
+            </div>
+            <div class="axis-line"></div>
+            <div class="axis-item" data-day="3">
+              <div class="axis-dot">3</div>
+              <div class="axis-label">5月3日</div>
+              <div class="axis-sub">丽江</div>
+            </div>
+            <div class="axis-line"></div>
+            <div class="axis-item" data-day="4">
+              <div class="axis-dot">4</div>
+              <div class="axis-label">5月4日</div>
+              <div class="axis-sub">丽江</div>
+            </div>
+          </div>
+
+          <!-- 地点线轴（移出手机） -->
+          <div class="axis-bar" id="outside-place-axis" style="display:none">
+            <div class="axis-item active" data-place="dali">
+              <div class="axis-dot">🏔️</div>
+              <div class="axis-label">大理</div>
+              <div class="axis-sub">2 天</div>
+            </div>
+            <div class="axis-line"></div>
+            <div class="axis-item" data-place="lijiang">
+              <div class="axis-dot">🏔️</div>
+              <div class="axis-label">丽江</div>
+              <div class="axis-sub">2 天</div>
+            </div>
+          </div>
+
+          <!-- 手机机框中只保留内容 -->
+          <div class="phone-mockup result-phone">
+            <div class="phone-statusbar">
+              <span class="phone-time">10:08</span>
+              <div class="phone-notch"></div>
+              <div class="phone-icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
               </div>
-              <div class="checklist-item">
-                <input type="checkbox" id="check-ticket" />
-                <label for="check-ticket">已预约玉龙雪山大索道票</label>
+            </div>
+            <div class="result-panel" id="result-panel">
+              <!-- 旅游前 -->
+              <div class="phase-content" id="pre-content">
+                <div class="checklist-card">
+                  <h3>旅行准备清单</h3>
+                  <div class="checklist-item">
+                    <input type="checkbox" id="check-hotel" />
+                    <label for="check-hotel">已定好酒店/客栈</label>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" id="check-ticket" />
+                    <label for="check-ticket">已预约玉龙雪山大索道票</label>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" id="check-transport" />
+                    <label for="check-transport">已订好大理→丽江动车票</label>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" id="check-insurance" />
+                    <label for="check-insurance">已购买旅行保险</label>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" id="check-gear" />
+                    <label for="check-gear">已准备防晒/保暖装备</label>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" id="check-oxygen" />
+                    <label for="check-oxygen">已备好氧气瓶（古城买更便宜）</label>
+                  </div>
+                </div>
               </div>
-              <div class="checklist-item">
-                <input type="checkbox" id="check-transport" />
-                <label for="check-transport">已订好大理→丽江动车票</label>
+
+              <!-- 旅行中 -->
+              <div class="phase-content active" id="during-content">
+                <div class="version-content active" id="v2-content">
+                  <div class="category-tabs" id="day-categories">
+                    <div class="cat-card active" data-cat="play">
+                      <div class="cat-card-icon">🎯</div>
+                      <div class="cat-card-title">玩乐行</div>
+                    </div>
+                    <div class="cat-card" data-cat="food">
+                      <div class="cat-card-icon">🍜</div>
+                      <div class="cat-card-title">食</div>
+                    </div>
+                    <div class="cat-card" data-cat="stay">
+                      <div class="cat-card-icon">🏨</div>
+                      <div class="cat-card-title">住</div>
+                    </div>
+                  </div>
+                  <div class="category-list" id="day-list"></div>
+                </div>
+
+                <div class="version-content" id="v3-content">
+                  <div class="category-tabs" id="place-categories">
+                    <div class="cat-card active" data-cat="play">
+                      <div class="cat-card-icon">🎯</div>
+                      <div class="cat-card-title">玩乐行</div>
+                    </div>
+                    <div class="cat-card" data-cat="food">
+                      <div class="cat-card-icon">🍜</div>
+                      <div class="cat-card-title">食</div>
+                    </div>
+                    <div class="cat-card" data-cat="stay">
+                      <div class="cat-card-icon">🏨</div>
+                      <div class="cat-card-title">住</div>
+                    </div>
+                  </div>
+                  <div class="category-list" id="place-list"></div>
+                </div>
+
+                <button class="goto-map-btn" id="goto-map-btn">
+                  <i class="fas fa-map-marked-alt"></i> 查看路线地图
+                </button>
               </div>
-              <div class="checklist-item">
-                <input type="checkbox" id="check-insurance" />
-                <label for="check-insurance">已购买旅行保险</label>
-              </div>
-              <div class="checklist-item">
-                <input type="checkbox" id="check-gear" />
-                <label for="check-gear">已准备防晒/保暖装备</label>
-              </div>
-              <div class="checklist-item">
-                <input type="checkbox" id="check-oxygen" />
-                <label for="check-oxygen">已备好氧气瓶（古城买更便宜）</label>
+
+              <!-- 旅行后 -->
+              <div class="phase-content" id="post-content">
+                <div class="review-card">
+                  <h3>旅行回顾</h3>
+                  <div class="photo-grid">
+                    <div class="photo-item">洱海日落</div>
+                    <div class="photo-item">玉龙雪山</div>
+                    <div class="photo-item">古城夜景</div>
+                    <div class="photo-item">蓝月谷</div>
+                  </div>
+                  <div class="review-notes">
+                    <h4>小红书旅行感悟</h4>
+                    <div class="note-item">
+                      <div class="note-avatar">👤</div>
+                      <div class="note-text">「大理的风花雪月真的名不虚传，4天3夜刚刚好，不会太累也不会错过精华。」</div>
+                    </div>
+                    <div class="note-item">
+                      <div class="note-avatar">👤</div>
+                      <div class="note-text">「玉龙雪山大索道一定要提前抢票！我们差点没上去，还好小艺提醒了。」</div>
+                    </div>
+                  </div>
+                  <div class="review-discuss">
+                    <h4>旅行讨论区</h4>
+                    <div class="discuss-input">分享你的旅行故事...</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- 旅行中 -->
-          <div class="phase-content active" id="during-content">
-            <!-- 版本切换标签 -->
-            <div class="version-tabs">
-              <button class="v-tab active" data-version="v2">时间线轴</button>
-              <button class="v-tab" data-version="v3">地点线</button>
-            </div>
-
-            <!-- 版本2：时间线轴 + 三板块 -->
-            <div class="version-content active" id="v2-content">
-              <!-- 时间线轴 -->
-              <div class="axis-bar" id="day-axis">
-                <div class="axis-item active" data-day="1">
-                  <div class="axis-dot">1</div>
-                  <div class="axis-label">5月1日</div>
-                  <div class="axis-sub">大理</div>
-                </div>
-                <div class="axis-line"></div>
-                <div class="axis-item" data-day="2">
-                  <div class="axis-dot">2</div>
-                  <div class="axis-label">5月2日</div>
-                  <div class="axis-sub">大理</div>
-                </div>
-                <div class="axis-line"></div>
-                <div class="axis-item" data-day="3">
-                  <div class="axis-dot">3</div>
-                  <div class="axis-label">5月3日</div>
-                  <div class="axis-sub">丽江</div>
-                </div>
-                <div class="axis-line"></div>
-                <div class="axis-item" data-day="4">
-                  <div class="axis-dot">4</div>
-                  <div class="axis-label">5月4日</div>
-                  <div class="axis-sub">丽江</div>
-                </div>
-              </div>
-              <!-- 三板块大卡片：玩乐行合并 -->
-              <div class="category-tabs" id="day-categories">
-                <div class="cat-card active" data-cat="play">
-                  <div class="cat-card-icon">🎯</div>
-                  <div class="cat-card-title">玩乐行</div>
-                </div>
-                <div class="cat-card" data-cat="food">
-                  <div class="cat-card-icon">🍜</div>
-                  <div class="cat-card-title">食</div>
-                </div>
-                <div class="cat-card" data-cat="stay">
-                  <div class="cat-card-icon">🏨</div>
-                  <div class="cat-card-title">住</div>
-                </div>
-              </div>
-              <!-- 内容列表 -->
-              <div class="category-list" id="day-list"></div>
-            </div>
-
-            <!-- 版本3：地点线 + 三板块 -->
-            <div class="version-content" id="v3-content">
-              <!-- 地点线 -->
-              <div class="axis-bar" id="place-axis">
-                <div class="axis-item active" data-place="dali">
-                  <div class="axis-dot">🏔️</div>
-                  <div class="axis-label">大理</div>
-                  <div class="axis-sub">2 天</div>
-                </div>
-                <div class="axis-line"></div>
-                <div class="axis-item" data-place="lijiang">
-                  <div class="axis-dot">🏔️</div>
-                  <div class="axis-label">丽江</div>
-                  <div class="axis-sub">2 天</div>
-                </div>
-              </div>
-              <!-- 三板块大卡片：玩乐行合并 -->
-              <div class="category-tabs" id="place-categories">
-                <div class="cat-card active" data-cat="play">
-                  <div class="cat-card-icon">🎯</div>
-                  <div class="cat-card-title">玩乐行</div>
-                </div>
-                <div class="cat-card" data-cat="food">
-                  <div class="cat-card-icon">🍜</div>
-                  <div class="cat-card-title">食</div>
-                </div>
-                <div class="cat-card" data-cat="stay">
-                  <div class="cat-card-icon">🏨</div>
-                  <div class="cat-card-title">住</div>
-                </div>
-              </div>
-              <!-- 内容列表 -->
-              <div class="category-list" id="place-list"></div>
-            </div>
-
-            <!-- 跳转地图按钮 -->
-            <button class="goto-map-btn" id="goto-map-btn">
-              <i class="fas fa-map-marked-alt"></i> 查看路线地图
-            </button>
-          </div>
-
-          <!-- 旅行后 -->
-          <div class="phase-content" id="post-content">
-            <div class="review-card">
-              <h3>旅行回顾</h3>
-              <div class="photo-grid">
-                <div class="photo-item">洱海日落</div>
-                <div class="photo-item">玉龙雪山</div>
-                <div class="photo-item">古城夜景</div>
-                <div class="photo-item">蓝月谷</div>
-              </div>
-              <div class="review-notes">
-                <h4>小红书旅行感悟</h4>
-                <div class="note-item">
-                  <div class="note-avatar">👤</div>
-                  <div class="note-text">「大理的风花雪月真的名不虚传，4天3夜刚刚好，不会太累也不会错过精华。」</div>
-                </div>
-                <div class="note-item">
-                  <div class="note-avatar">👤</div>
-                  <div class="note-text">「玉龙雪山大索道一定要提前抢票！我们差点没上去，还好小艺提醒了。」</div>
-                </div>
-              </div>
-              <div class="review-discuss">
-                <h4>旅行讨论区</h4>
-                <div class="discuss-input">分享你的旅行故事...</div>
-              </div>
+          <!-- 抽象地图路线卡片 -->
+          <div class="abstract-map-card">
+            <h4><i class="fas fa-route"></i> 路线示意</h4>
+            <svg class="abstract-map-svg" viewBox="0 0 300 120">
+              <!-- 大理古城 -->
+              <circle cx="60" cy="60" r="8" fill="#ff2442"/>
+              <text x="60" y="85" text-anchor="middle" font-size="11" fill="#333">大理古城</text>
+              <!-- 洱海 -->
+              <circle cx="140" cy="40" r="5" fill="#ff6b8a"/>
+              <text x="140" y="25" text-anchor="middle" font-size="10" fill="#666">洱海</text>
+              <!-- 丽江古城 -->
+              <circle cx="240" cy="60" r="8" fill="#ff2442"/>
+              <text x="240" y="85" text-anchor="middle" font-size="11" fill="#333">丽江古城</text>
+              <!-- 玉龙雪山 -->
+              <circle cx="240" cy="30" r="5" fill="#ff6b8a"/>
+              <text x="240" y="18" text-anchor="middle" font-size="10" fill="#666">玉龙雪山</text>
+              <!-- 连线 -->
+              <path d="M60 60 Q100 50 140 40" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+              <path d="M140 40 Q190 50 240 60" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+              <path d="M240 60 L240 30" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+            </svg>
+            <div class="abstract-map-info">
+              <span><i class="fas fa-road"></i> 大理 ↔ 丽江 约180km</span>
+              <span><i class="fas fa-train"></i> 动车约2小时</span>
             </div>
           </div>
         </div>
-      </div>
 
       <!-- 重新体验按钮 -->
       <div class="replay-area">

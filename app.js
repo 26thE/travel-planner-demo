@@ -471,6 +471,12 @@ function initXiaoai() {
       document.getElementById(`${version}-content`).classList.add('active');
       if (version === 'v2') renderV2();
       if (version === 'v3') renderV3();
+
+      // 控制外部 axis 显示/隐藏
+      const dayAxis = document.getElementById('outside-day-axis');
+      const placeAxis = document.getElementById('outside-place-axis');
+      if (dayAxis) dayAxis.style.display = version === 'v2' ? 'flex' : 'none';
+      if (placeAxis) placeAxis.style.display = version === 'v3' ? 'flex' : 'none';
     });
   });
 
@@ -514,6 +520,14 @@ function initXiaoai() {
       const phase = tab.dataset.phase;
       document.querySelectorAll('.phase-content').forEach(c => c.classList.remove('active'));
       document.getElementById(`${phase}-content`).classList.add('active');
+
+      // 控制外部元素显示/隐藏
+      const versionTabs = document.getElementById('outside-version-tabs');
+      const dayAxis = document.getElementById('outside-day-axis');
+      const placeAxis = document.getElementById('outside-place-axis');
+      if (versionTabs) versionTabs.style.display = phase === 'during' ? 'flex' : 'none';
+      if (dayAxis) dayAxis.style.display = (phase === 'during' && document.querySelector('.v-tab.active')?.dataset.version === 'v2') ? 'flex' : 'none';
+      if (placeAxis) placeAxis.style.display = (phase === 'during' && document.querySelector('.v-tab.active')?.dataset.version === 'v3') ? 'flex' : 'none';
     });
   });
 
@@ -576,6 +590,17 @@ function initXiaoai() {
     document.querySelectorAll('.phase-content').forEach(c => c.classList.remove('active'));
     const duringContent = document.getElementById('during-content');
     if (duringContent) duringContent.classList.add('active');
+
+    // 重置外部控件状态
+    const versionTabs = document.getElementById('outside-version-tabs');
+    const dayAxis = document.getElementById('outside-day-axis');
+    const placeAxis = document.getElementById('outside-place-axis');
+    if (versionTabs) versionTabs.style.display = 'flex';
+    if (dayAxis) dayAxis.style.display = 'flex';
+    if (placeAxis) placeAxis.style.display = 'none';
+    document.querySelectorAll('#outside-version-tabs .v-tab').forEach(t => t.classList.remove('active'));
+    const v2tab = document.querySelector('#outside-version-tabs .v-tab[data-version="v2"]');
+    if (v2tab) v2tab.classList.add('active');
 
     chatArea.scrollTop = 0;
   }
