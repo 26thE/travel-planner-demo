@@ -39,7 +39,10 @@ function initNav() {
       document.getElementById(`${viewName}-view`).classList.add('active');
 
       if (viewName === 'map') {
-        setTimeout(initMap, 100);
+        setTimeout(() => {
+          initMap();
+          if (map) setTimeout(() => map.invalidateSize(), 300);
+        }, 200);
       }
     });
   });
@@ -510,7 +513,10 @@ function initXiaoai() {
       document.querySelector('.nav-btn[data-view="map"]').classList.add('active');
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       document.getElementById('map-view').classList.add('active');
-      setTimeout(initMap, 100);
+      setTimeout(() => {
+        initMap();
+        if (map) setTimeout(() => map.invalidateSize(), 300);
+      }, 200);
     });
   }
 
@@ -530,7 +536,8 @@ function initXiaoai() {
     document.querySelectorAll('.chat-msg').forEach(msg => {
       msg.style.opacity = '0';
       msg.style.transform = 'translateY(10px)';
-      msg.style.animation = 'none';
+      // 使用空字符串而非 'none'，确保后续动画可以重新触发
+      msg.style.animation = '';
     });
 
     // 默认显示内容、隐藏打字机（fallback：即使动画失败也能看到内容）
@@ -563,8 +570,9 @@ function initXiaoai() {
         const msgEl = document.querySelector(`.chat-msg[data-msg="${item.msg}"]`);
         if (!msgEl) return;
 
-        msgEl.style.animation = '';
-        msgEl.offsetHeight;
+        // 先设为 none 再重新设置，确保浏览器重新触发动画
+        msgEl.style.animation = 'none';
+        msgEl.offsetHeight; // 强制重排
         msgEl.style.animation = 'msgAppear 0.4s ease forwards';
 
         chatArea.scrollTop = chatArea.scrollHeight;
