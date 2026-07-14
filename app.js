@@ -435,7 +435,8 @@ function initXiaoai() {
       }
       renderCategoryList(document.getElementById('day-list'), items);
     }
-    document.querySelectorAll('#outside-day-axis .axis-item').forEach(el => {
+    // 更新所有带 data-day 的 axis-item（机框内外）
+    document.querySelectorAll('.axis-item[data-day]').forEach(el => {
       el.classList.toggle('active', parseInt(el.dataset.day) === v2Day);
     });
     document.querySelectorAll('#day-categories .cat-card').forEach(el => {
@@ -453,7 +454,8 @@ function initXiaoai() {
       }
       renderCategoryList(document.getElementById('place-list'), items);
     }
-    document.querySelectorAll('#outside-place-axis .axis-item').forEach(el => {
+    // 更新所有带 data-place 的 axis-item（机框内外）
+    document.querySelectorAll('.axis-item[data-place]').forEach(el => {
       el.classList.toggle('active', el.dataset.place === v3Place);
     });
     document.querySelectorAll('#place-categories .cat-card').forEach(el => {
@@ -480,8 +482,8 @@ function initXiaoai() {
     });
   });
 
-  // 版本2：时间线轴
-  document.querySelectorAll('#outside-day-axis .axis-item').forEach(el => {
+  // 版本2：时间线轴（绑定所有带 data-day 的 axis-item，包括机框内外）
+  document.querySelectorAll('.axis-item[data-day]').forEach(el => {
     el.addEventListener('click', () => {
       v2Day = parseInt(el.dataset.day);
       renderV2();
@@ -496,8 +498,8 @@ function initXiaoai() {
     });
   });
 
-  // 版本3：地点线
-  document.querySelectorAll('#outside-place-axis .axis-item').forEach(el => {
+  // 版本3：地点线（绑定所有带 data-place 的 axis-item，包括机框内外）
+  document.querySelectorAll('.axis-item[data-place]').forEach(el => {
     el.addEventListener('click', () => {
       v3Place = el.dataset.place;
       renderV3();
