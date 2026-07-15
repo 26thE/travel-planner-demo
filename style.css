@@ -2041,6 +2041,39 @@ body {
   font-size: 12px;
 }
 
+/* 快速流转 Agent 入口 */
+.checklist-action {
+  margin-top: 8px;
+  margin-left: 28px;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fff8f9, #fff0f3);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+  border: 1px solid var(--accent);
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  box-shadow: 0 2px 8px rgba(255,36,66,0.2);
+  transform: translateY(-1px);
+}
+
+.action-icon {
+  font-size: 14px;
+}
+
 /* 勾选后动态生成的卡片区域 */
 .checklist-reward {
   display: flex;
