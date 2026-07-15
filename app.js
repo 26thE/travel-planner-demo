@@ -684,4 +684,90 @@ function initXiaoai() {
   // 初始化预渲染内容
   renderV2();
   renderV3();
+
+  // ===== 旅行前 Checklist 勾选奖励卡片 =====
+  const rewardContainer = document.getElementById('checklist-reward');
+  if (rewardContainer) {
+    const rewardCards = {
+      hotel: {
+        icon: '🏨',
+        title: '住宿已确认',
+        detail: '大理古城·慢时光客栈 · 2晚<br>丽江古城·听风小筑 · 1晚',
+        tag: '已预订'
+      },
+      ticket: {
+        icon: '🎫',
+        title: '门票已预约',
+        detail: '玉龙雪山大索道<br>5月3日 09:00-11:00',
+        tag: '已出票'
+      },
+      transport: {
+        icon: '🚄',
+        title: '交通已订票',
+        detail: 'D8752 大理→丽江<br>5月2日 14:20 发车',
+        tag: '已出票'
+      },
+      insurance: {
+        icon: '🛡️',
+        title: '保险已生效',
+        detail: '境内旅行综合意外险<br>4天全程保障 · 含高原医疗',
+        tag: '保障中'
+      },
+      gear: {
+        icon: '🎒',
+        title: '装备已备齐',
+        detail: '防晒霜SPF50+ · 墨镜 · 冲锋衣<br>保暖手套 · 登山杖',
+        tag: '已打包'
+      },
+      oxygen: {
+        icon: '💨',
+        title: '氧气已准备',
+        detail: '便携氧气瓶×2<br>古城药店购买更便宜',
+        tag: '已备货'
+      }
+    };
+
+    document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
+      const item = checkbox.closest('.checklist-item');
+      if (!item) return;
+      const cardKey = item.dataset.card;
+      if (!cardKey || !rewardCards[cardKey]) return;
+
+      checkbox.addEventListener('change', () => {
+        const existing = rewardContainer.querySelector(`.reward-card[data-card="${cardKey}"]`);
+        if (checkbox.checked) {
+          if (existing) return; // 已存在
+          const data = rewardCards[cardKey];
+          const card = document.createElement('div');
+          card.className = 'reward-card';
+          card.dataset.card = cardKey;
+          card.innerHTML = `
+            <div class="reward-header">
+              <span class="reward-icon">${data.icon}</span>
+              <span class="reward-title">${data.title}</span>
+              <span class="reward-tag">${data.tag}</span>
+            </div>
+            <div class="reward-detail">${data.detail}</div>
+          `;
+          rewardContainer.appendChild(card);
+          // 触发动画
+          requestAnimationFrame(() => {
+            card.classList.add('rewardAppear');
+          });
+          // 滚动到卡片可见
+          setTimeout(() => {
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 100);
+        } else {
+          if (existing) {
+            existing.classList.remove('rewardAppear');
+            existing.classList.add('rewardRemove');
+            setTimeout(() => {
+              if (existing.parentNode) existing.parentNode.removeChild(existing);
+            }, 350);
+          }
+        }
+      });
+    });
+  }
 }

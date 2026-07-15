@@ -1977,14 +1977,8 @@ body {
 }
 
 .checklist-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
-  font-size: 13px;
-  color: var(--text);
-  cursor: pointer;
   transition: var(--transition);
 }
 
@@ -1996,7 +1990,17 @@ body {
   color: var(--primary);
 }
 
-.checklist-item input[type="checkbox"] {
+.checklist-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.checklist-main input[type="checkbox"] {
   width: 18px;
   height: 18px;
   accent-color: var(--primary);
@@ -2004,14 +2008,130 @@ body {
   flex-shrink: 0;
 }
 
-.checklist-item label {
+.checklist-main label {
   cursor: pointer;
   flex: 1;
 }
 
-.checklist-item input[type="checkbox"]:checked + label {
+.checklist-main input[type="checkbox"]:checked + label {
   text-decoration: line-through;
   color: var(--text-lighter);
+}
+
+.checklist-recommend {
+  margin-top: 6px;
+  margin-left: 28px;
+  font-size: 11px;
+}
+
+.checklist-recommend a {
+  color: var(--text-lighter);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition);
+}
+
+.checklist-recommend a:hover {
+  color: var(--primary);
+}
+
+.checklist-recommend .rec-icon {
+  font-size: 12px;
+}
+
+/* 勾选后动态生成的卡片区域 */
+.checklist-reward {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.reward-card {
+  background: white;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+  animation: rewardAppear 0.4s ease;
+  border-left: 4px solid var(--primary);
+}
+
+@keyframes rewardAppear {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reward-card.removing {
+  animation: rewardRemove 0.3s ease forwards;
+}
+
+@keyframes rewardRemove {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+.reward-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.reward-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.reward-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.reward-tag {
+  padding: 3px 10px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--primary-dark);
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.reward-detail {
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.6;
+  padding-left: 4px;
+}
+
+.reward-body {
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.reward-tip {
+  margin-top: 8px;
+  padding: 8px;
+  background: #fff8f9;
+  border-radius: 8px;
+  font-size: 11px;
+  color: var(--text-light);
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.reward-tip .tip-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
 /* ========== 旅行后：Review ========== */

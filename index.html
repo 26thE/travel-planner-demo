@@ -263,31 +263,75 @@
               <div class="phase-content" id="pre-content">
                 <div class="checklist-card">
                   <h3>旅行准备清单</h3>
-                  <div class="checklist-item">
-                    <input type="checkbox" id="check-hotel" />
-                    <label for="check-hotel">已定好酒店/客栈</label>
+                  <div class="checklist-item" data-card="hotel">
+                    <div class="checklist-main">
+                      <input type="checkbox" id="check-hotel" />
+                      <label for="check-hotel">已定好酒店/客栈</label>
+                    </div>
+                    <div class="checklist-recommend">
+                      <a href="https://www.xiaohongshu.com/search_result?keyword=%E5%A4%A7%E7%90%86%E5%8F%A4%E5%9F%8E%E5%AE%A2%E6%A0%88" target="_blank">
+                        <span class="rec-icon">📖</span>「大理古城客栈挑选指南」
+                      </a>
+                    </div>
                   </div>
-                  <div class="checklist-item">
-                    <input type="checkbox" id="check-ticket" />
-                    <label for="check-ticket">已预约玉龙雪山大索道票</label>
+                  <div class="checklist-item" data-card="ticket">
+                    <div class="checklist-main">
+                      <input type="checkbox" id="check-ticket" />
+                      <label for="check-ticket">已预约玉龙雪山大索道票</label>
+                    </div>
+                    <div class="checklist-recommend">
+                      <a href="https://www.xiaohongshu.com/search_result?keyword=%E7%8E%89%E9%BE%99%E9%9B%AA%E5%B1%B1%E6%8A%A2%E7%A5%A8" target="_blank">
+                        <span class="rec-icon">📖</span>「玉龙雪山抢票全攻略」
+                      </a>
+                    </div>
                   </div>
-                  <div class="checklist-item">
-                    <input type="checkbox" id="check-transport" />
-                    <label for="check-transport">已订好大理→丽江动车票</label>
+                  <div class="checklist-item" data-card="transport">
+                    <div class="checklist-main">
+                      <input type="checkbox" id="check-transport" />
+                      <label for="check-transport">已订好大理→丽江动车票</label>
+                    </div>
+                    <div class="checklist-recommend">
+                      <a href="https://www.xiaohongshu.com/search_result?keyword=%E5%A4%A7%E7%90%86%E4%B8%BD%E6%B1%9F%E5%8A%A8%E8%BD%A6" target="_blank">
+                        <span class="rec-icon">📖</span>「大理丽江交通攻略」
+                      </a>
+                    </div>
                   </div>
-                  <div class="checklist-item">
-                    <input type="checkbox" id="check-insurance" />
-                    <label for="check-insurance">已购买旅行保险</label>
+                  <div class="checklist-item" data-card="insurance">
+                    <div class="checklist-main">
+                      <input type="checkbox" id="check-insurance" />
+                      <label for="check-insurance">已购买旅行保险</label>
+                    </div>
+                    <div class="checklist-recommend">
+                      <a href="https://www.xiaohongshu.com/search_result?keyword=%E6%97%85%E8%A1%8C%E4%BF%9D%E9%99%A9%E9%80%89%E8%B4%AD" target="_blank">
+                        <span class="rec-icon">📖</span>「旅行保险选购指南」
+                      </a>
+                    </div>
                   </div>
-                  <div class="checklist-item">
-                    <input type="checkbox" id="check-gear" />
-                    <label for="check-gear">已准备防晒/保暖装备</label>
+                  <div class="checklist-item" data-card="gear">
+                    <div class="checklist-main">
+                      <input type="checkbox" id="check-gear" />
+                      <label for="check-gear">已准备防晒/保暖装备</label>
+                    </div>
+                    <div class="checklist-recommend">
+                      <a href="https://www.xiaohongshu.com/search_result?keyword=%E4%BA%91%E5%8D%97%E9%98%B2%E6%99%92%E5%BF%85%E5%A4%87" target="_blank">
+                        <span class="rec-icon">📖</span>「云南防晒装备清单」
+                      </a>
+                    </div>
                   </div>
-                  <div class="checklist-item">
-                    <input type="checkbox" id="check-oxygen" />
-                    <label for="check-oxygen">已备好氧气瓶（古城买更便宜）</label>
+                  <div class="checklist-item" data-card="oxygen">
+                    <div class="checklist-main">
+                      <input type="checkbox" id="check-oxygen" />
+                      <label for="check-oxygen">已备好氧气瓶（古城买更便宜）</label>
+                    </div>
+                    <div class="checklist-recommend">
+                      <a href="https://www.xiaohongshu.com/search_result?keyword=%E7%8E%89%E9%BE%99%E9%9B%AA%E5%B1%B1%E6%B0%A7%E6%B0%94%E7%93%B6" target="_blank">
+                        <span class="rec-icon">📖</span>「高原反应预防指南」
+                      </a>
+                    </div>
                   </div>
                 </div>
+                <!-- 勾选后动态生成的卡片区域 -->
+                <div class="checklist-reward" id="checklist-reward"></div>
               </div>
 
               <!-- 旅行中 -->
