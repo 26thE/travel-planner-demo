@@ -420,24 +420,36 @@ function initXiaoai() {
     console.log('[debug] renderV2 called, v2Day=', v2Day, 'v2Cat=', v2Cat);
     const dayData = CATEGORIZED_DATA.byDay[v2Day];
     console.log('[debug] dayData=', dayData);
+
+    const dayList = document.getElementById('day-list');
+    const dayTransport = document.getElementById('day-transport');
+
     if (dayData) {
-      let items = dayData[v2Cat];
-      if (v2Cat === 'play') {
-        items = [...dayData.play, ...dayData.transport];
-      }
-      // 如果住为空，向前查找最近的住宿记录
-      if (v2Cat === 'stay' && (!items || items.length === 0)) {
-        for (let d = v2Day - 1; d >= 1; d--) {
-          const prevDay = CATEGORIZED_DATA.byDay[d];
-          if (prevDay && prevDay.stay && prevDay.stay.length > 0) {
-            items = prevDay.stay;
-            break;
+      if (v2Cat === 'transport') {
+        // 行：显示路线示意
+        if (dayList) dayList.style.display = 'none';
+        if (dayTransport) dayTransport.style.display = 'block';
+      } else {
+        // 玩/食/住：显示列表
+        if (dayList) dayList.style.display = 'block';
+        if (dayTransport) dayTransport.style.display = 'none';
+
+        let items = dayData[v2Cat];
+        // 如果住为空，向前查找最近的住宿记录
+        if (v2Cat === 'stay' && (!items || items.length === 0)) {
+          for (let d = v2Day - 1; d >= 1; d--) {
+            const prevDay = CATEGORIZED_DATA.byDay[d];
+            if (prevDay && prevDay.stay && prevDay.stay.length > 0) {
+              items = prevDay.stay;
+              break;
+            }
           }
         }
+        renderCategoryList(dayList, items);
       }
-      renderCategoryList(document.getElementById('day-list'), items);
     }
-    // 更新所有带 data-day 的 axis-item（机框内外）
+
+    // 更新所有带 data-day 的 axis-item
     document.querySelectorAll('.axis-item[data-day]').forEach(el => {
       el.classList.toggle('active', parseInt(el.dataset.day) === v2Day);
     });
@@ -451,14 +463,26 @@ function initXiaoai() {
     console.log('[debug] renderV3 called, v3Place=', v3Place, 'v3Cat=', v3Cat);
     const placeData = CATEGORIZED_DATA.byPlace[v3Place];
     console.log('[debug] placeData=', placeData);
+
+    const placeList = document.getElementById('place-list');
+    const placeTransport = document.getElementById('place-transport');
+
     if (placeData) {
-      let items = placeData[v3Cat];
-      if (v3Cat === 'play') {
-        items = [...placeData.play, ...placeData.transport];
+      if (v3Cat === 'transport') {
+        // 行：显示路线示意
+        if (placeList) placeList.style.display = 'none';
+        if (placeTransport) placeTransport.style.display = 'block';
+      } else {
+        // 玩/食/住：显示列表
+        if (placeList) placeList.style.display = 'block';
+        if (placeTransport) placeTransport.style.display = 'none';
+
+        let items = placeData[v3Cat];
+        renderCategoryList(placeList, items);
       }
-      renderCategoryList(document.getElementById('place-list'), items);
     }
-    // 更新所有带 data-place 的 axis-item（机框内外）
+
+    // 更新所有带 data-place 的 axis-item
     document.querySelectorAll('.axis-item[data-place]').forEach(el => {
       el.classList.toggle('active', el.dataset.place === v3Place);
     });
