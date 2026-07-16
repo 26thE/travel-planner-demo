@@ -2376,10 +2376,156 @@ body {
   gap: 4px;
 }
 
+/* ========== 横版时间线卡片 ========== */
+.timeline-cards {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  padding: 8px 4px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.timeline-cards::-webkit-scrollbar {
+  height: 4px;
+}
+
+.timeline-cards::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.timeline-card {
+  flex: 0 0 220px;
+  background: white;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  margin-right: 8px;
+}
+
+.timeline-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius: 16px 16px 0 0;
+}
+
+.timeline-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  background: #fff0f3;
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.timeline-icon {
+  font-size: 28px;
+  text-align: center;
+  margin: 4px 0;
+}
+
+.timeline-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.timeline-desc {
+  font-size: 11px;
+  color: var(--text-light);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.timeline-cost {
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 700;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+/* 交通连接器 */
+.timeline-connector {
+  flex: 0 0 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 4px;
+  position: relative;
+}
+
+.timeline-connector::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light));
+  z-index: 0;
+}
+
+.connector-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.connector-text {
+  font-size: 10px;
+  color: var(--text-lighter);
+  text-align: center;
+  white-space: nowrap;
+  z-index: 1;
+  background: var(--bg);
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
 /* 响应式适配 */
 @media (max-width: 768px) {
   .result-composite {
     width: 100%;
     max-width: 380px;
+  }
+
+  .timeline-card {
+    flex: 0 0 180px;
+    padding: 12px;
+  }
+
+  .timeline-connector {
+    flex: 0 0 50px;
   }
 }

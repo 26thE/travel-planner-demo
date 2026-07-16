@@ -415,6 +415,61 @@ function initXiaoai() {
     container.innerHTML = items.map(renderSpotItem).join('');
   }
 
+  // 渲染横向时间线卡片
+  function renderTimelineCards(container, spots) {
+    if (!container) return;
+    if (!spots || spots.length === 0) {
+      container.innerHTML = `<div class="cat-empty">暂无</div>`;
+      return;
+    }
+
+    let html = '';
+    spots.forEach((spot, idx) => {
+      // 景点卡片
+      html += `
+        <div class="timeline-card" data-spot="${idx}">
+          <span class="timeline-time">${spot.time}</span>
+          <div class="timeline-icon">${spot.icon}</div>
+          <div class="timeline-title">${spot.title}</div>
+          <div class="timeline-desc">${spot.desc}</div>
+          <div class="timeline-cost">${spot.cost}</div>
+        </div>
+      `;
+
+      // 如果不是最后一个，添加交通连接器
+      if (idx < spots.length - 1) {
+        const nextSpot = spots[idx + 1];
+        const transportIcon = spot.transport ? getTransportIcon(spot.transport) : 'fa-arrow-right';
+        const transportText = spot.transport || '步行';
+        const duration = spot.duration || '';
+
+        html += `
+          <div class="timeline-connector">
+            <div class="connector-icon"><i class="fas fa-${transportIcon}"></i></div>
+            <span class="connector-text">${transportText}</span>
+            ${duration ? `<span class="connector-text">${duration}</span>` : ''}
+          </div>
+        `;
+      }
+    });
+
+    container.innerHTML = html;
+
+    // 点击卡片打开详情
+    container.querySelectorAll('.timeline-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const spotIdx = parseInt(card.dataset.spot);
+        // 获取当前显示的是哪一天的spots
+        const dayData = container.id === 'day-cards'
+          ? TRIP_DATA.schedule[v2Day - 1]
+          : TRIP_DATA.schedule.find(d => d.destination === (v3Place === 'dali' ? '大理' : '丽江'));
+        if (dayData && dayData.spots[spotIdx]) {
+          openSpotDetail(dayData.spots[spotIdx]);
+        }
+      });
+    });
+  }
+
   // 渲染版本2
   function renderV2() {
     console.log('[debug] renderV2 called, v2Day=', v2Day, 'v2Cat=', v2Cat);
@@ -422,16 +477,27 @@ function initXiaoai() {
     console.log('[debug] dayData=', dayData);
 
     const dayList = document.getElementById('day-list');
+    const dayCards = document.getElementById('day-cards');
     const dayTransport = document.getElementById('day-transport');
 
     if (dayData) {
       if (v2Cat === 'transport') {
         // 行：显示路线示意
         if (dayList) dayList.style.display = 'none';
+        if (dayCards) dayCards.style.display = 'none';
         if (dayTransport) dayTransport.style.display = 'block';
+      } else if (v2Cat === 'play') {
+        // 玩：显示横向卡片
+        if (dayList) dayList.style.display = 'none';
+        if (dayCards) dayCards.style.display = 'flex';
+        if (dayTransport) dayTransport.style.display = 'none';
+        // 使用原始schedule数据，按时间顺序
+        const daySpots = TRIP_DATA.schedule[v2Day - 1].spots;
+        renderTimelineCards(dayCards, daySpots);
       } else {
-        // 玩/食/住：显示列表
+        // 食/住：显示列表
         if (dayList) dayList.style.display = 'block';
+        if (dayCards) dayCards.style.display = 'none';
         if (dayTransport) dayTransport.style.display = 'none';
 
         let items = dayData[v2Cat];
@@ -465,16 +531,33 @@ function initXiaoai() {
     console.log('[debug] placeData=', placeData);
 
     const placeList = document.getElementById('place-list');
+    const placeCards = document.getElementById('place-cards');
     const placeTransport = document.getElementById('place-transport');
 
     if (placeData) {
       if (v3Cat === 'transport') {
         // 行：显示路线示意
         if (placeList) placeList.style.display = 'none';
+        if (placeCards) placeCards.style.display = 'none';
         if (placeTransport) placeTransport.style.display = 'block';
+      } else if (v3Cat === 'play') {
+        // 玩：显示横向卡片
+        if (placeList) placeList.style.display = 'none';
+        if (placeCards) placeCards.style.display = 'flex';
+        if (placeTransport) placeTransport.style.display = 'none';
+        // 使用按地点分类的原始spots
+        const destName = v3Place === 'dali' ? '大理' : '丽江';
+        const daySpots = [];
+        TRIP_DATA.schedule.forEach(day => {
+          if (day.destination === destName) {
+            daySpots.push(...day.spots);
+          }
+        });
+        renderTimelineCards(placeCards, daySpots);
       } else {
-        // 玩/食/住：显示列表
+        // 食/住：显示列表
         if (placeList) placeList.style.display = 'block';
+        if (placeCards) placeCards.style.display = 'none';
         if (placeTransport) placeTransport.style.display = 'none';
 
         let items = placeData[v3Cat];
