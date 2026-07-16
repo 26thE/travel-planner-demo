@@ -575,6 +575,23 @@ function initXiaoai() {
   }
 
   // 渲染确认行程列表
+  function getSpotCategory(day, spot) {
+    const dayCats = CATEGORIZED_DATA.byDay[day];
+    if (!dayCats) return 'play';
+    if (dayCats.play.includes(spot)) return 'play';
+    if (dayCats.food.includes(spot)) return 'food';
+    if (dayCats.stay.includes(spot)) return 'stay';
+    if (dayCats.transport.includes(spot)) return 'transport';
+    return 'play';
+  }
+
+  const CAT_LABELS = {
+    play: { label: '玩', color: '#ff6b35', bg: '#fff4ef' },
+    food: { label: '食', color: '#e91e63', bg: '#fdeff4' },
+    stay: { label: '住', color: '#6366f1', bg: '#f0f0fe' },
+    transport: { label: '行', color: '#0288d1', bg: '#e3f4fd' }
+  };
+
   function renderConfirmList() {
     const list = document.getElementById('confirm-list');
     const subtitle = document.getElementById('confirm-subtitle');
@@ -591,9 +608,14 @@ function initXiaoai() {
           <div class="confirm-day-label">Day${day.day} · ${day.date} · ${day.destination}</div>
       `;
       day.spots.forEach((spot, spotIdx) => {
+        const cat = getSpotCategory(day.day, spot);
+        const catInfo = CAT_LABELS[cat];
         html += `
           <div class="confirm-card" data-day="${day.day}" data-spot="${spotIdx}" style="animation-delay:${(dayIdx * 0.15 + spotIdx * 0.08).toFixed(2)}s">
-            <div class="confirm-card-time">${spot.time}</div>
+            <div class="confirm-card-header">
+              <span class="confirm-card-time">${spot.time}</span>
+              <span class="confirm-card-tag" style="color:${catInfo.color};background:${catInfo.bg}">${catInfo.label}</span>
+            </div>
             <div class="confirm-card-main">
               <div class="confirm-card-icon">${spot.icon}</div>
               <div class="confirm-card-body">

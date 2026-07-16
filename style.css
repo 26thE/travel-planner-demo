@@ -2641,6 +2641,21 @@ body {
   margin-bottom: 6px;
 }
 
+.confirm-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.confirm-card-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
 .confirm-card-main {
   display: flex;
   align-items: flex-start;
