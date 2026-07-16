@@ -487,6 +487,35 @@ function initXiaoai() {
         if (dayCards) dayCards.style.display = 'none';
         if (dayTransport) dayTransport.style.display = 'block';
       } else if (v2Cat === 'play') {
+        // 玩：显示竖向列表（和食/住保持一致）
+        if (dayList) dayList.style.display = 'block';
+        if (dayCards) dayCards.style.display = 'none';
+        if (dayTransport) dayTransport.style.display = 'none';
+        renderCategoryList(dayList, dayData.play);
+      } else {
+        // 食/住：显示列表
+        if (dayList) dayList.style.display = 'block';
+        if (dayCards) dayCards.style.display = 'none';
+        if (dayTransport) dayTransport.style.display = 'none';
+
+        let items = dayData[v2Cat];
+        // 如果住为空，向前查找最近的住宿记录
+        if (v2Cat === 'stay' && (!items || items.length === 0)) {
+          for (let d = v2Day - 1; d >= 1; d--) {
+            const prevDay = CATEGORIZED_DATA.byDay[d];
+            if (prevDay && prevDay.stay && prevDay.stay.length > 0) {
+              items = prevDay.stay;
+              break;
+            }
+          }
+        }
+        renderCategoryList(dayList, items);
+      }
+        // 行：显示路线示意
+        if (dayList) dayList.style.display = 'none';
+        if (dayCards) dayCards.style.display = 'none';
+        if (dayTransport) dayTransport.style.display = 'block';
+      } else if (v2Cat === 'play') {
         // 玩：显示横向卡片
         if (dayList) dayList.style.display = 'none';
         if (dayCards) dayCards.style.display = 'flex';
@@ -536,6 +565,25 @@ function initXiaoai() {
 
     if (placeData) {
       if (v3Cat === 'transport') {
+        // 行：显示路线示意
+        if (placeList) placeList.style.display = 'none';
+        if (placeCards) placeCards.style.display = 'none';
+        if (placeTransport) placeTransport.style.display = 'block';
+      } else if (v3Cat === 'play') {
+        // 玩：显示竖向列表（和食/住保持一致）
+        if (placeList) placeList.style.display = 'block';
+        if (placeCards) placeCards.style.display = 'none';
+        if (placeTransport) placeTransport.style.display = 'none';
+        renderCategoryList(placeList, placeData.play);
+      } else {
+        // 食/住：显示列表
+        if (placeList) placeList.style.display = 'block';
+        if (placeCards) placeCards.style.display = 'none';
+        if (placeTransport) placeTransport.style.display = 'none';
+
+        let items = placeData[v3Cat];
+        renderCategoryList(placeList, items);
+      }
         // 行：显示路线示意
         if (placeList) placeList.style.display = 'none';
         if (placeCards) placeCards.style.display = 'none';
