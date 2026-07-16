@@ -232,6 +232,35 @@
           </div>
         </div>
 
+        <!-- 行程确认手机（中间确认环节） -->
+        <div class="phone-mockup confirm-phone" id="confirm-phone" style="display:none">
+          <div class="phone-statusbar">
+            <span class="phone-time">10:08</span>
+            <div class="phone-notch"></div>
+            <div class="phone-icons">
+              <i class="fas fa-signal"></i>
+              <i class="fas fa-wifi"></i>
+              <i class="fas fa-battery-full"></i>
+            </div>
+          </div>
+          <div class="confirm-header">
+            <div class="confirm-title">📋 请确认行程</div>
+            <div class="confirm-subtitle" id="confirm-subtitle">4天3夜 · 大理丽江</div>
+          </div>
+          <div class="confirm-list" id="confirm-list">
+            <!-- 动态生成确认卡片 -->
+          </div>
+          <div class="confirm-footer">
+            <div class="confirm-input-wrap">
+              <i class="fas fa-edit"></i>
+              <input type="text" class="confirm-input" id="confirm-input" placeholder="输入修改意见，如：第三天改为上午去雪山..." />
+            </div>
+            <button class="confirm-btn" id="confirm-btn">
+              <i class="fas fa-check"></i> 确认行程
+            </button>
+          </div>
+        </div>
+
         <!-- 生成结果复合区域 -->
         <div class="result-composite">
           <!-- 旅行阶段大tab（移出手机） -->

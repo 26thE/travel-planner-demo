@@ -574,6 +574,52 @@ function initXiaoai() {
     });
   }
 
+  // 渲染确认行程列表
+  function renderConfirmList() {
+    const list = document.getElementById('confirm-list');
+    const subtitle = document.getElementById('confirm-subtitle');
+    if (!list) return;
+
+    if (subtitle) {
+      subtitle.textContent = `${TRIP_DATA.dates.days}天${TRIP_DATA.dates.days - 1}夜 · ${TRIP_DATA.destinations.map(d => d.name).join('')}`;
+    }
+
+    let html = '';
+    TRIP_DATA.schedule.forEach((day, dayIdx) => {
+      html += `
+        <div class="confirm-day-group">
+          <div class="confirm-day-label">Day${day.day} · ${day.date} · ${day.destination}</div>
+      `;
+      day.spots.forEach((spot, spotIdx) => {
+        html += `
+          <div class="confirm-card" data-day="${day.day}" data-spot="${spotIdx}" style="animation-delay:${(dayIdx * 0.15 + spotIdx * 0.08).toFixed(2)}s">
+            <div class="confirm-card-time">${spot.time}</div>
+            <div class="confirm-card-main">
+              <div class="confirm-card-icon">${spot.icon}</div>
+              <div class="confirm-card-body">
+                <div class="confirm-card-title">${spot.title}</div>
+                <div class="confirm-card-desc">${spot.desc}</div>
+                <div class="confirm-card-cost">${spot.cost}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+    });
+
+    list.innerHTML = html;
+
+    // 点击卡片打开详情
+    list.querySelectorAll('.confirm-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const dayIdx = parseInt(card.dataset.day) - 1;
+        const spotIdx = parseInt(card.dataset.spot);
+        openSpotDetail(TRIP_DATA.schedule[dayIdx].spots[spotIdx]);
+      });
+    });
+  }
+
   // 版本切换标签
   document.querySelectorAll('.v-tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -651,6 +697,21 @@ function initXiaoai() {
     });
   }
 
+  // 确认行程按钮
+  const confirmBtn = document.getElementById('confirm-btn');
+  const confirmPhone = document.getElementById('confirm-phone');
+  if (confirmBtn) {
+    confirmBtn.addEventListener('click', () => {
+      if (confirmPhone) {
+        confirmPhone.style.display = 'none';
+        confirmPhone.classList.remove('visible');
+      }
+      resultPanel.classList.add('visible');
+      document.querySelector('.result-composite').style.display = 'flex';
+      renderV2();
+    });
+  }
+
   // 定义对话序列
   let timers = [];
 
@@ -703,6 +764,16 @@ function initXiaoai() {
     const v2tab = document.querySelector('#outside-version-tabs .v-tab[data-version="v2"]');
     if (v2tab) v2tab.classList.add('active');
 
+    // 重置确认手机
+    const confirmPhone = document.getElementById('confirm-phone');
+    if (confirmPhone) {
+      confirmPhone.style.display = 'none';
+      confirmPhone.classList.remove('visible');
+    }
+
+    // 重置结果面板
+    resultPanel.classList.remove('visible');
+
     chatArea.scrollTop = 0;
   }
 
@@ -747,9 +818,13 @@ function initXiaoai() {
         }
 
         if (item.msg === 8) {
+          const confirmPhone = document.getElementById('confirm-phone');
           const finalTimer = setTimeout(() => {
-            resultPanel.classList.add('visible');
-            renderV2();
+            if (confirmPhone) {
+              confirmPhone.style.display = 'flex';
+              confirmPhone.classList.add('visible');
+              renderConfirmList();
+            }
           }, 1500);
           timers.push(finalTimer);
         }
