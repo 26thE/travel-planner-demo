@@ -2313,6 +2313,110 @@ body {
   font-size: 16px;
 }
 
+/* ========== 小地图按钮（行tab内） ========== */
+.goto-map-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 8px;
+  vertical-align: middle;
+  transition: opacity 0.2s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.25);
+}
+
+.goto-map-mini:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.goto-map-mini i {
+  font-size: 10px;
+}
+
+.abstract-map-card h4 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* ========== 机框内地图 overlay ========== */
+.map-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background: white;
+  display: none;
+  flex-direction: column;
+  border-radius: 0 0 28px 28px;
+}
+
+.map-overlay.active {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+.map-overlay-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.map-overlay-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 14px;
+  border: none;
+  background: #f5f5f5;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.map-overlay-back:hover {
+  background: var(--accent);
+  color: var(--primary);
+}
+
+.map-overlay-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+  text-align: center;
+  padding-right: 60px;
+}
+
+.map-overlay-body {
+  flex: 1;
+  min-height: 0;
+  border-radius: 0 0 28px 28px;
+  overflow: hidden;
+}
+
+/* Leaflet 在机框内的适配 */
+.map-overlay-body .leaflet-container {
+  border-radius: 0 0 28px 28px;
+}
+  font-size: 16px;
+}
+
 /* ========== 结果复合区域 ========== */
 .result-composite {
   width: 380px;

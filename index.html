@@ -288,6 +288,14 @@
               </div>
             </div>
             <div class="result-panel" id="result-panel">
+              <!-- 机框内地图 overlay -->
+              <div class="map-overlay" id="map-overlay" style="display:none">
+                <div class="map-overlay-header">
+                  <button class="map-overlay-back" id="map-overlay-back"><i class="fas fa-chevron-left"></i> 返回</button>
+                  <span class="map-overlay-title"><i class="fas fa-map-marked-alt"></i> 路线地图</span>
+                </div>
+                <div class="map-overlay-body" id="phone-map"></div>
+              </div>
               <!-- 旅游前 -->
               <div class="phase-content" id="pre-content">
                 <div class="checklist-card">
@@ -444,7 +452,7 @@
                   <div class="timeline-cards" id="day-cards" style="display:none"></div>
                   <div class="transport-panel" id="day-transport" style="display:none">
                     <div class="abstract-map-card" style="margin:0">
-                      <h4><i class="fas fa-route"></i> 路线示意</h4>
+                      <h4><i class="fas fa-route"></i> 路线示意 <button class="goto-map-mini" id="goto-map-btn-v2"><i class="fas fa-map-marked-alt"></i> 地图</button></h4>
                       <svg class="abstract-map-svg" viewBox="0 0 340 200">
                         <!-- 出发地 -->
                         <circle cx="10" cy="160" r="6" fill="#6366f1"/>
@@ -542,7 +550,7 @@
                   <div class="timeline-cards" id="place-cards" style="display:none"></div>
                   <div class="transport-panel" id="place-transport" style="display:none">
                     <div class="abstract-map-card" style="margin:0">
-                      <h4><i class="fas fa-route"></i> 路线示意</h4>
+                      <h4><i class="fas fa-route"></i> 路线示意 <button class="goto-map-mini" id="goto-map-btn-v3"><i class="fas fa-map-marked-alt"></i> 地图</button></h4>
                       <svg class="abstract-map-svg" viewBox="0 0 340 200">
                         <!-- 出发地 -->
                         <circle cx="10" cy="160" r="6" fill="#6366f1"/>
@@ -603,9 +611,6 @@
                   </div>
                 </div>
 
-                <button class="goto-map-btn" id="goto-map-btn">
-                  <i class="fas fa-map-marked-alt"></i> 查看路线地图
-                </button>
               </div>
 
               <!-- 旅行后 -->

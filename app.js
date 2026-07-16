@@ -694,18 +694,94 @@ function initXiaoai() {
     });
   });
 
-  // 跳转地图按钮
-  const gotoMapBtn = document.getElementById('goto-map-btn');
-  if (gotoMapBtn) {
-    gotoMapBtn.addEventListener('click', () => {
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector('.nav-btn[data-view="map"]').classList.add('active');
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      document.getElementById('map-view').classList.add('active');
-      setTimeout(() => {
-        initMap();
-        if (map) setTimeout(() => map.invalidateSize(), 300);
-      }, 200);
+  // 机框内地图实例
+  let phoneMap = null;
+
+  function initPhoneMap() {
+    const container = document.getElementById('phone-map');
+    if (!container) return;
+
+    if (phoneMap) {
+      phoneMap.invalidateSize();
+      return;
+    }
+
+    phoneMap = L.map('phone-map').setView([26.3, 100.2], 8);
+
+    L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+      attribution: '&copy; <a href="https://www.amap.com">高德地图</a>',
+      subdomains: '1234',
+      maxZoom: 18
+    }).addTo(phoneMap);
+
+    const dayColors = ['#ff2442', '#ff6b8a', '#ff8fab', '#ffb3c6'];
+    const allPoints = [];
+
+    TRIP_DATA.schedule.forEach((day, dayIdx) => {
+      const dayPoints = [];
+      day.spots.forEach((spot, spotIdx) => {
+        if (spot.location) {
+          const [lat, lng] = spot.location;
+          dayPoints.push([lat, lng]);
+          allPoints.push([lat, lng]);
+
+          const markerHtml = `<div class="custom-marker" style="background:${dayColors[dayIdx]}">${day.day}-${spotIdx + 1}</div>`;
+          const icon = L.divIcon({ html: markerHtml, className: '', iconSize: [32, 32], iconAnchor: [16, 16] });
+          L.marker([lat, lng], { icon })
+            .bindPopup(`<div class="popup-title">${spot.icon} ${spot.title}</div><div class="popup-desc">${spot.time} · ${spot.cost}</div>`)
+            .addTo(phoneMap);
+        }
+      });
+
+      if (dayPoints.length > 1) {
+        L.polyline(dayPoints, { color: dayColors[dayIdx], weight: 3, opacity: 0.7, dashArray: dayIdx % 2 === 0 ? null : '8,6' }).addTo(phoneMap);
+      }
+    });
+
+    // 大理到丽江连线
+    const dali = TRIP_DATA.destinations[0].coordinates;
+    const lijiang = TRIP_DATA.destinations[1].coordinates;
+    L.polyline([dali, lijiang], { color: '#ff2442', weight: 4, opacity: 0.5, dashArray: '10,8' }).addTo(phoneMap);
+
+    // 目的地大标记
+    TRIP_DATA.destinations.forEach(dest => {
+      const icon = L.divIcon({ html: `<div class="custom-marker destination">${dest.name}</div>`, className: '', iconSize: [40, 40], iconAnchor: [20, 20] });
+      L.marker(dest.coordinates, { icon }).bindPopup(`<div class="popup-title">${dest.name}</div><div class="popup-desc">${dest.tagline}</div>`).addTo(phoneMap);
+    });
+
+    if (allPoints.length > 0) {
+      phoneMap.fitBounds(L.latLngBounds(allPoints), { padding: [40, 40] });
+    }
+  }
+
+  // 跳转地图按钮（v2 + v3 两个版本）— 改为机框内显示
+  ['goto-map-btn-v2', 'goto-map-btn-v3'].forEach(btnId => {
+    const btn = document.getElementById(btnId);
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const overlay = document.getElementById('map-overlay');
+        if (overlay) {
+          overlay.style.display = 'flex';
+          overlay.classList.add('active');
+          // 确保容器可见后再初始化/刷新地图
+          requestAnimationFrame(() => {
+            initPhoneMap();
+            if (phoneMap) setTimeout(() => phoneMap.invalidateSize(), 300);
+          });
+        }
+      });
+    }
+  });
+
+  // 地图 overlay 返回按钮
+  const mapOverlayBack = document.getElementById('map-overlay-back');
+  if (mapOverlayBack) {
+    mapOverlayBack.addEventListener('click', () => {
+      const overlay = document.getElementById('map-overlay');
+      if (overlay) {
+        overlay.classList.remove('active');
+        overlay.style.display = 'none';
+      }
     });
   }
 
