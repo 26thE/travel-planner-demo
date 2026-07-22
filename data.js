@@ -419,6 +419,3 @@ const CATEGORIZED_DATA = categorizeSpots();
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { TRIP_DATA, CATEGORIZED_DATA };
 }
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = TRIP_DATA;
-}

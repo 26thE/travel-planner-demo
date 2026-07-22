@@ -2,8 +2,65 @@
 // 功能：时间线视图 / 地图视图 / 预算视图
 
 let map = null;
-let routeLayer = null;
 let markers = [];
+
+// ========== 通用地图函数 ==========
+function createMap(containerId, existingMap) {
+  if (existingMap) {
+    existingMap.invalidateSize();
+    return existingMap;
+  }
+
+  const mapInstance = L.map(containerId).setView([26.3, 100.2], 8);
+
+  L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+    attribution: '&copy; <a href="https://www.amap.com">高德地图</a>',
+    subdomains: '1234',
+    maxZoom: 18
+  }).addTo(mapInstance);
+
+  const allPoints = [];
+  const dayColors = ['#ff2442', '#ff6b8a', '#ff8fab', '#ffb3c6'];
+
+  TRIP_DATA.schedule.forEach((day, dayIdx) => {
+    const dayPoints = [];
+
+    day.spots.forEach((spot, spotIdx) => {
+      if (spot.location) {
+        const [lat, lng] = spot.location;
+        dayPoints.push([lat, lng]);
+        allPoints.push([lat, lng]);
+
+        const markerHtml = `<div class="custom-marker" style="background:${dayColors[dayIdx]}">${day.day}-${spotIdx + 1}</div>`;
+        const icon = L.divIcon({ html: markerHtml, className: '', iconSize: [32, 32], iconAnchor: [16, 16] });
+        L.marker([lat, lng], { icon })
+          .bindPopup(`<div class="popup-title">${spot.icon} ${spot.title}</div><div class="popup-desc">${spot.time} · ${spot.cost}</div>`)
+          .addTo(mapInstance);
+      }
+    });
+
+    if (dayPoints.length > 1) {
+      L.polyline(dayPoints, { color: dayColors[dayIdx], weight: 3, opacity: 0.7, dashArray: dayIdx % 2 === 0 ? null : '8,6' }).addTo(mapInstance);
+    }
+  });
+
+  // 大理到丽江连线
+  const dali = TRIP_DATA.destinations[0].coordinates;
+  const lijiang = TRIP_DATA.destinations[1].coordinates;
+  L.polyline([dali, lijiang], { color: '#ff2442', weight: 4, opacity: 0.5, dashArray: '10,8' }).addTo(mapInstance);
+
+  // 目的地大标记
+  TRIP_DATA.destinations.forEach(dest => {
+    const icon = L.divIcon({ html: `<div class="custom-marker destination">${dest.name}</div>`, className: '', iconSize: [40, 40], iconAnchor: [20, 20] });
+    L.marker(dest.coordinates, { icon }).bindPopup(`<div class="popup-title">${dest.name}</div><div class="popup-desc">${dest.tagline}</div>`).addTo(mapInstance);
+  });
+
+  if (allPoints.length > 0) {
+    mapInstance.fitBounds(L.latLngBounds(allPoints), { padding: [40, 40] });
+  }
+
+  return mapInstance;
+}
 
 // ========== 初始化 ==========
 document.addEventListener('DOMContentLoaded', () => {
@@ -117,99 +174,9 @@ function initTimeline() {
 
 // ========== 地图视图 ==========
 function initMap() {
-  if (map) {
-    map.invalidateSize();
-    return;
-  }
-
-  // 中心点：大理和丽江中间
-  map = L.map('map').setView([26.3, 100.2], 8);
-
-  L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
-    attribution: '&copy; <a href="https://www.amap.com">高德地图</a>',
-    subdomains: '1234',
-    maxZoom: 18
-  }).addTo(map);
-
-  // 绘制路线
-  const allPoints = [];
-  const dayColors = ['#ff2442', '#ff6b8a', '#ff8fab', '#ffb3c6'];
-
-  TRIP_DATA.schedule.forEach((day, dayIdx) => {
-    const dayPoints = [];
-
-    day.spots.forEach((spot, spotIdx) => {
-      if (spot.location) {
-        const [lat, lng] = spot.location;
-        dayPoints.push([lat, lng]);
-        allPoints.push([lat, lng]);
-
-        // 标记点
-        const markerHtml = `<div class="custom-marker" style="background:${dayColors[dayIdx]}">
-          ${day.day}-${spotIdx + 1}
-        </div>`;
-
-        const icon = L.divIcon({
-          html: markerHtml,
-          className: '',
-          iconSize: [32, 32],
-          iconAnchor: [16, 16]
-        });
-
-        const marker = L.marker([lat, lng], { icon })
-          .bindPopup(`
-            <div class="popup-title">${spot.icon} ${spot.title}</div>
-            <div class="popup-desc">${spot.time} · ${spot.cost}</div>
-          `)
-          .addTo(map);
-
-        markers.push(marker);
-      }
-    });
-
-    // 绘制当天的路线
-    if (dayPoints.length > 1) {
-      L.polyline(dayPoints, {
-        color: dayColors[dayIdx],
-        weight: 3,
-        opacity: 0.7,
-        dashArray: dayIdx % 2 === 0 ? null : '8,6'
-      }).addTo(map);
-    }
-  });
-
-  // 大理到丽江的连线
-  const dali = TRIP_DATA.destinations[0].coordinates;
-  const lijiang = TRIP_DATA.destinations[1].coordinates;
-  L.polyline([dali, lijiang], {
-    color: '#ff2442',
-    weight: 4,
-    opacity: 0.5,
-    dashArray: '10,8'
-  }).addTo(map);
-
-  // 目的地大标记
-  TRIP_DATA.destinations.forEach(dest => {
-    const icon = L.divIcon({
-      html: `<div class="custom-marker destination">${dest.name}</div>`,
-      className: '',
-      iconSize: [40, 40],
-      iconAnchor: [20, 20]
-    });
-
-    L.marker(dest.coordinates, { icon })
-      .bindPopup(`<div class="popup-title">${dest.name}</div><div class="popup-desc">${dest.tagline}</div>`)
-      .addTo(map);
-  });
-
-  // 自动适应所有点
-  if (allPoints.length > 0) {
-    const bounds = L.latLngBounds(allPoints);
-    map.fitBounds(bounds, { padding: [40, 40] });
-  }
-
-  // 渲染路线指引侧边栏
-  renderRouteGuide();
+  const hadMap = !!map;
+  map = createMap('map', map);
+  if (map && !hadMap) renderRouteGuide();
 }
 
 function renderRouteGuide() {
@@ -388,6 +355,17 @@ function initXiaoai() {
   let v2Day = 1, v2Cat = 'play';
   let v3Place = 'dali', v3Cat = 'play';
 
+  // 初始化抽象地图 SVG（从 template clone 到两个 transport-panel）
+  const svgTemplate = document.getElementById('abstract-map-svg');
+  if (svgTemplate) {
+    document.querySelectorAll('.abstract-map-svg-wrap').forEach(wrap => {
+      wrap.innerHTML = '';
+      wrap.appendChild(svgTemplate.content.cloneNode(true));
+    });
+  }
+  let v2Day = 1, v2Cat = 'play';
+  let v3Place = 'dali', v3Cat = 'play';
+
   // 渲染单个spot
   function renderSpotItem(spot) {
     const tagsHtml = spot.tags
@@ -438,7 +416,6 @@ function initXiaoai() {
 
       // 如果不是最后一个，添加交通连接器
       if (idx < spots.length - 1) {
-        const nextSpot = spots[idx + 1];
         const transportIcon = spot.transport ? getTransportIcon(spot.transport) : 'fa-arrow-right';
         const transportText = spot.transport || '步行';
         const duration = spot.duration || '';
@@ -470,38 +447,26 @@ function initXiaoai() {
     });
   }
 
-  // 渲染版本2
-  function renderV2() {
-    console.log('[debug] renderV2 called, v2Day=', v2Day, 'v2Cat=', v2Cat);
-    const dayData = CATEGORIZED_DATA.byDay[v2Day];
-    console.log('[debug] dayData=', dayData);
-
-    const dayList = document.getElementById('day-list');
-    const dayCards = document.getElementById('day-cards');
-    const dayTransport = document.getElementById('day-transport');
-
-    if (dayData) {
-      if (v2Cat === 'transport') {
-        // 行：显示路线示意
-        if (dayList) dayList.style.display = 'none';
-        if (dayCards) dayCards.style.display = 'none';
-        if (dayTransport) dayTransport.style.display = 'block';
-      } else if (v2Cat === 'play') {
-        // 玩：显示竖向列表（和食/住结构一致）
-        if (dayList) dayList.style.display = 'block';
-        if (dayCards) dayCards.style.display = 'none';
-        if (dayTransport) dayTransport.style.display = 'none';
-        renderCategoryList(dayList, dayData.play);
+  // 通用版本渲染
+  function renderVersion({ data, cat, listEl, cardsEl, transportEl, axisSelector, catSelector, activeValue, axisAttr, day = null }) {
+    if (data) {
+      if (cat === 'transport') {
+        if (listEl) listEl.style.display = 'none';
+        if (cardsEl) cardsEl.style.display = 'none';
+        if (transportEl) transportEl.style.display = 'block';
+      } else if (cat === 'play') {
+        if (listEl) listEl.style.display = 'block';
+        if (cardsEl) cardsEl.style.display = 'none';
+        if (transportEl) transportEl.style.display = 'none';
+        renderCategoryList(listEl, data.play);
       } else {
-        // 食/住：显示竖向列表
-        if (dayList) dayList.style.display = 'block';
-        if (dayCards) dayCards.style.display = 'none';
-        if (dayTransport) dayTransport.style.display = 'none';
+        if (listEl) listEl.style.display = 'block';
+        if (cardsEl) cardsEl.style.display = 'none';
+        if (transportEl) transportEl.style.display = 'none';
 
-        let items = dayData[v2Cat];
-        // 如果住为空，向前查找最近的住宿记录
-        if (v2Cat === 'stay' && (!items || items.length === 0)) {
-          for (let d = v2Day - 1; d >= 1; d--) {
+        let items = data[cat];
+        if (cat === 'stay' && day !== null && (!items || items.length === 0)) {
+          for (let d = day - 1; d >= 1; d--) {
             const prevDay = CATEGORIZED_DATA.byDay[d];
             if (prevDay && prevDay.stay && prevDay.stay.length > 0) {
               items = prevDay.stay;
@@ -509,58 +474,46 @@ function initXiaoai() {
             }
           }
         }
-        renderCategoryList(dayList, items);
+        renderCategoryList(listEl, items);
       }
     }
 
-    // 更新所有带 data-day 的 axis-item
-    document.querySelectorAll('.axis-item[data-day]').forEach(el => {
-      el.classList.toggle('active', parseInt(el.dataset.day) === v2Day);
+    document.querySelectorAll(axisSelector).forEach(el => {
+      el.classList.toggle('active', el.dataset[axisAttr] == activeValue);
     });
-    document.querySelectorAll('#day-categories .cat-card').forEach(el => {
-      el.classList.toggle('active', el.dataset.cat === v2Cat);
+    document.querySelectorAll(catSelector).forEach(el => {
+      el.classList.toggle('active', el.dataset.cat === cat);
+    });
+  }
+
+  // 渲染版本2
+  function renderV2() {
+    renderVersion({
+      data: CATEGORIZED_DATA.byDay[v2Day],
+      cat: v2Cat,
+      listEl: document.getElementById('day-list'),
+      cardsEl: document.getElementById('day-cards'),
+      transportEl: document.getElementById('day-transport'),
+      axisSelector: '.axis-item[data-day]',
+      catSelector: '#day-categories .cat-card',
+      activeValue: v2Day,
+      axisAttr: 'day',
+      day: v2Day
     });
   }
 
   // 渲染版本3
   function renderV3() {
-    console.log('[debug] renderV3 called, v3Place=', v3Place, 'v3Cat=', v3Cat);
-    const placeData = CATEGORIZED_DATA.byPlace[v3Place];
-    console.log('[debug] placeData=', placeData);
-
-    const placeList = document.getElementById('place-list');
-    const placeCards = document.getElementById('place-cards');
-    const placeTransport = document.getElementById('place-transport');
-
-    if (placeData) {
-      if (v3Cat === 'transport') {
-        // 行：显示路线示意
-        if (placeList) placeList.style.display = 'none';
-        if (placeCards) placeCards.style.display = 'none';
-        if (placeTransport) placeTransport.style.display = 'block';
-      } else if (v3Cat === 'play') {
-        // 玩：显示竖向列表（和食/住结构一致）
-        if (placeList) placeList.style.display = 'block';
-        if (placeCards) placeCards.style.display = 'none';
-        if (placeTransport) placeTransport.style.display = 'none';
-        renderCategoryList(placeList, placeData.play);
-      } else {
-        // 食/住：显示竖向列表
-        if (placeList) placeList.style.display = 'block';
-        if (placeCards) placeCards.style.display = 'none';
-        if (placeTransport) placeTransport.style.display = 'none';
-
-        let items = placeData[v3Cat];
-        renderCategoryList(placeList, items);
-      }
-    }
-
-    // 更新所有带 data-place 的 axis-item
-    document.querySelectorAll('.axis-item[data-place]').forEach(el => {
-      el.classList.toggle('active', el.dataset.place === v3Place);
-    });
-    document.querySelectorAll('#place-categories .cat-card').forEach(el => {
-      el.classList.toggle('active', el.dataset.cat === v3Cat);
+    renderVersion({
+      data: CATEGORIZED_DATA.byPlace[v3Place],
+      cat: v3Cat,
+      listEl: document.getElementById('place-list'),
+      cardsEl: document.getElementById('place-cards'),
+      transportEl: document.getElementById('place-transport'),
+      axisSelector: '.axis-item[data-place]',
+      catSelector: '#place-categories .cat-card',
+      activeValue: v3Place,
+      axisAttr: 'place'
     });
   }
 
@@ -648,7 +601,6 @@ function initXiaoai() {
   // 版本2：时间线轴（绑定所有带 data-day 的 axis-item，包括机框内外）
   document.querySelectorAll('.axis-item[data-day]').forEach(el => {
     el.addEventListener('click', () => {
-      console.log('[debug] day clicked:', el.dataset.day);
       v2Day = parseInt(el.dataset.day);
       renderV2();
     });
@@ -665,7 +617,6 @@ function initXiaoai() {
   // 版本3：地点线（绑定所有带 data-place 的 axis-item，包括机框内外）
   document.querySelectorAll('.axis-item[data-place]').forEach(el => {
     el.addEventListener('click', () => {
-      console.log('[debug] place clicked:', el.dataset.place);
       v3Place = el.dataset.place;
       renderV3();
     });
@@ -700,58 +651,7 @@ function initXiaoai() {
   function initPhoneMap() {
     const container = document.getElementById('phone-map');
     if (!container) return;
-
-    if (phoneMap) {
-      phoneMap.invalidateSize();
-      return;
-    }
-
-    phoneMap = L.map('phone-map').setView([26.3, 100.2], 8);
-
-    L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
-      attribution: '&copy; <a href="https://www.amap.com">高德地图</a>',
-      subdomains: '1234',
-      maxZoom: 18
-    }).addTo(phoneMap);
-
-    const dayColors = ['#ff2442', '#ff6b8a', '#ff8fab', '#ffb3c6'];
-    const allPoints = [];
-
-    TRIP_DATA.schedule.forEach((day, dayIdx) => {
-      const dayPoints = [];
-      day.spots.forEach((spot, spotIdx) => {
-        if (spot.location) {
-          const [lat, lng] = spot.location;
-          dayPoints.push([lat, lng]);
-          allPoints.push([lat, lng]);
-
-          const markerHtml = `<div class="custom-marker" style="background:${dayColors[dayIdx]}">${day.day}-${spotIdx + 1}</div>`;
-          const icon = L.divIcon({ html: markerHtml, className: '', iconSize: [32, 32], iconAnchor: [16, 16] });
-          L.marker([lat, lng], { icon })
-            .bindPopup(`<div class="popup-title">${spot.icon} ${spot.title}</div><div class="popup-desc">${spot.time} · ${spot.cost}</div>`)
-            .addTo(phoneMap);
-        }
-      });
-
-      if (dayPoints.length > 1) {
-        L.polyline(dayPoints, { color: dayColors[dayIdx], weight: 3, opacity: 0.7, dashArray: dayIdx % 2 === 0 ? null : '8,6' }).addTo(phoneMap);
-      }
-    });
-
-    // 大理到丽江连线
-    const dali = TRIP_DATA.destinations[0].coordinates;
-    const lijiang = TRIP_DATA.destinations[1].coordinates;
-    L.polyline([dali, lijiang], { color: '#ff2442', weight: 4, opacity: 0.5, dashArray: '10,8' }).addTo(phoneMap);
-
-    // 目的地大标记
-    TRIP_DATA.destinations.forEach(dest => {
-      const icon = L.divIcon({ html: `<div class="custom-marker destination">${dest.name}</div>`, className: '', iconSize: [40, 40], iconAnchor: [20, 20] });
-      L.marker(dest.coordinates, { icon }).bindPopup(`<div class="popup-title">${dest.name}</div><div class="popup-desc">${dest.tagline}</div>`).addTo(phoneMap);
-    });
-
-    if (allPoints.length > 0) {
-      phoneMap.fitBounds(L.latLngBounds(allPoints), { padding: [40, 40] });
-    }
+    phoneMap = createMap('phone-map', phoneMap);
   }
 
   // 跳转地图按钮（v2 + v3 两个版本）— 改为机框内显示
