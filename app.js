@@ -363,8 +363,6 @@ function initXiaoai() {
       wrap.appendChild(svgTemplate.content.cloneNode(true));
     });
   }
-  let v2Day = 1, v2Cat = 'play';
-  let v3Place = 'dali', v3Cat = 'play';
 
   // 渲染单个spot
   function renderSpotItem(spot) {
