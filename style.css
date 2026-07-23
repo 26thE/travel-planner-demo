@@ -935,6 +935,21 @@ body {
   background: #0a0a0a;
   border-radius: 42px;
   box-shadow:
+    0 0 0 5px #0a0a0a,
+    0 0 0 6px #2a2a2a,
+    0 25px 70px rgba(0,0,0,0.35);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 760px;
+}
+.phone-mockup {
+  width: 360px;
+  flex-shrink: 0;
+  background: #0a0a0a;
+  border-radius: 42px;
+  box-shadow:
     0 0 0 8px #0a0a0a,
     0 25px 70px rgba(0,0,0,0.35);
   overflow: hidden;
@@ -970,31 +985,7 @@ body {
   z-index: -1;
 }
 
-/* 侧面电源键 */
-.phone-mockup::before {
-  content: '';
-  position: absolute;
-  right: -7px;
-  top: 160px;
-  width: 4px;
-  height: 45px;
-  background: #1a1a1a;
-  border-radius: 0 2px 2px 0;
-  z-index: -1;
-}
 
-/* 侧面音量键 */
-.phone-mockup::after {
-  content: '';
-  position: absolute;
-  left: -7px;
-  top: 140px;
-  width: 4px;
-  height: 70px;
-  background: #1a1a1a;
-  border-radius: 2px 0 0 2px;
-  z-index: -1;
-}
 /* 屏幕区域 */
 .phone-mockup > .phone-statusbar,
 .phone-mockup > .xiaoai-header,
@@ -1189,12 +1180,6 @@ body {
   .xiaoai-workspace {
     flex-direction: column;
     align-items: center;
-  }
-
-  .phone-mockup {
-    width: 100%;
-    max-width: 360px;
-    height: 580px;
   }
 
   .phone-mockup {
@@ -1626,13 +1611,6 @@ body {
 
 /* 响应式适配 */
 @media (max-width: 768px) {
-  .phone-mockup {
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1), 0 0 0 4px #e8e8e8;
-    height: auto;
-    min-height: 600px;
-  }
-
   .flow-steps {
     gap: 4px;
     padding: 12px 8px;
@@ -1662,13 +1640,6 @@ body {
 /* 结果手机（右侧） */
 .result-phone {
   height: 760px;
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 12px;
-  background: var(--bg);
 }
 
 .result-panel.visible {
@@ -2769,6 +2740,22 @@ body {
 }
 
 /* ========== 行程确认手机 ========== */
+.confirm-phone {
+  display: none;
+  flex-direction: column;
+  width: 360px;
+  height: 760px;
+  border-radius: 42px;
+  overflow: hidden;
+  background: #0a0a0a;
+  box-shadow:
+    0 0 0 5px #0a0a0a,
+    0 0 0 6px #2a2a2a,
+    0 25px 70px rgba(0,0,0,0.35);
+  position: relative;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
 .confirm-phone {
   display: none;
   flex-direction: column;
