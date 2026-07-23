@@ -930,20 +930,44 @@ body {
 
 /* 手机模拟界面 — 鸿蒙直板机统一风格 */
 .phone-mockup {
-  width: 390px;
+  width: 360px;
   flex-shrink: 0;
   background: #0a0a0a;
-  border-radius: 44px;
+  border-radius: 42px;
   box-shadow:
-    0 0 0 3px #1f1f1f,
-    0 0 0 7px #0a0a0a,
-    0 0 0 8px #2a2a2a,
-    0 28px 70px rgba(0,0,0,0.4);
+    0 0 0 8px #0a0a0a,
+    0 25px 70px rgba(0,0,0,0.35);
   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 750px;
+  height: 760px;
+}
+
+/* 侧面电源键 */
+.phone-mockup::before {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 170px;
+  width: 4px;
+  height: 45px;
+  background: #1a1a1a;
+  border-radius: 0 2px 2px 0;
+  z-index: -1;
+}
+
+/* 侧面音量键 */
+.phone-mockup::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 150px;
+  width: 4px;
+  height: 70px;
+  background: #1a1a1a;
+  border-radius: 2px 0 0 2px;
+  z-index: -1;
 }
 
 /* 侧面电源键 */
@@ -971,48 +995,6 @@ body {
   border-radius: 2px 0 0 2px;
   z-index: -1;
 }
-.phone-mockup {
-  width: 375px;
-  flex-shrink: 0;
-  background: #0a0a0a;
-  border-radius: 40px;
-  box-shadow:
-    0 0 0 2px #2a2a2a,
-    0 0 0 5px #1a1a1a,
-    0 25px 60px rgba(0,0,0,0.35);
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 720px;
-}
-
-/* 侧面电源键 */
-.phone-mockup::before {
-  content: '';
-  position: absolute;
-  right: -5px;
-  top: 140px;
-  width: 3px;
-  height: 40px;
-  background: #1a1a1a;
-  border-radius: 0 2px 2px 0;
-  z-index: -1;
-}
-
-/* 侧面音量键 */
-.phone-mockup::after {
-  content: '';
-  position: absolute;
-  left: -5px;
-  top: 120px;
-  width: 3px;
-  height: 60px;
-  background: #1a1a1a;
-  border-radius: 2px 0 0 2px;
-  z-index: -1;
-}
-
 /* 屏幕区域 */
 .phone-mockup > .phone-statusbar,
 .phone-mockup > .xiaoai-header,
@@ -1211,13 +1193,19 @@ body {
 
   .phone-mockup {
     width: 100%;
-    max-width: 380px;
+    max-width: 360px;
+    height: 580px;
+  }
+
+  .phone-mockup {
+    width: 100%;
+    max-width: 360px;
     height: 580px;
   }
 
   .block-panel {
     width: 100%;
-    max-width: 380px;
+    max-width: 360px;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 10px;
@@ -1673,23 +1661,7 @@ body {
 
 /* 结果手机（右侧） */
 .result-phone {
-  height: 750px;
-}
-
-.result-phone .result-panel {
-  border-radius: 0 0 36px 36px;
-}
-.result-phone {
-  height: 720px;
-}
-.result-phone {
-  height: 640px;
-}
-
-.result-phone .result-panel {
-  border-radius: 0 0 28px 28px;
-}
-.result-panel {
+  height: 760px;
   flex: 1;
   overflow-y: auto;
   display: flex;
@@ -2053,7 +2025,7 @@ body {
 @media (max-width: 768px) {
   .result-panel {
     width: 100%;
-    max-width: 380px;
+    max-width: 360px;
   }
 
   #v1-content {
@@ -2783,7 +2755,7 @@ body {
 @media (max-width: 768px) {
   .result-composite {
     width: 100%;
-    max-width: 380px;
+    max-width: 360px;
   }
 
   .timeline-card {
@@ -2800,33 +2772,19 @@ body {
 .confirm-phone {
   display: none;
   flex-direction: column;
-  width: 390px;
-  height: 750px;
-  border-radius: 44px;
+  width: 360px;
+  height: 760px;
+  border-radius: 42px;
   overflow: hidden;
   background: #0a0a0a;
   box-shadow:
-    0 0 0 3px #1f1f1f,
-    0 0 0 7px #0a0a0a,
-    0 0 0 8px #2a2a2a,
-    0 28px 70px rgba(0,0,0,0.4);
+    0 0 0 8px #0a0a0a,
+    0 25px 70px rgba(0,0,0,0.35);
   position: relative;
   flex-shrink: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
-.confirm-phone {
-  display: none;
-  flex-direction: column;
-  width: 375px;
-  height: 760px;
-  border-radius: 36px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 8px #1a1a1a, 0 0 0 10px #333;
-  position: relative;
-  flex-shrink: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
+
 
 .confirm-header {
   padding: 18px 16px 14px;
