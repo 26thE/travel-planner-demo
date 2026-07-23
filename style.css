@@ -928,7 +928,104 @@ body {
   flex-shrink: 0;
 }
 
-/* 手机模拟界面 */
+/* 手机模拟界面 — 鸿蒙直板机统一风格 */
+.phone-mockup {
+  width: 375px;
+  flex-shrink: 0;
+  background: #0a0a0a;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 2px #2a2a2a,
+    0 0 0 5px #1a1a1a,
+    0 25px 60px rgba(0,0,0,0.35);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 720px;
+}
+
+/* 侧面电源键 */
+.phone-mockup::before {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 140px;
+  width: 3px;
+  height: 40px;
+  background: #1a1a1a;
+  border-radius: 0 2px 2px 0;
+  z-index: -1;
+}
+
+/* 侧面音量键 */
+.phone-mockup::after {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 120px;
+  width: 3px;
+  height: 60px;
+  background: #1a1a1a;
+  border-radius: 2px 0 0 2px;
+  z-index: -1;
+}
+
+/* 屏幕区域 */
+.phone-mockup > .phone-statusbar,
+.phone-mockup > .xiaoai-header,
+.phone-mockup > .chat-area,
+.phone-mockup > .phone-inputbar,
+.phone-mockup > .confirm-header,
+.phone-mockup > .confirm-list,
+.phone-mockup > .confirm-footer,
+.phone-mockup > .result-panel {
+  background: var(--card-bg);
+}
+
+/* 底部手势导航条 */
+.phone-gesture-bar {
+  height: 24px;
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.phone-gesture-bar::after {
+  content: '';
+  width: 120px;
+  height: 4px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 2px;
+}
+
+/* 药丸形居中摄像头 */
+.phone-notch {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 22px;
+  background: #1a1a1a;
+  border-radius: 0 0 12px 12px;
+  z-index: 10;
+}
+
+/* 状态栏适配药丸 */
+.phone-statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px 6px;
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 600;
+  position: relative;
+  background: var(--card-bg);
+}
 .phone-mockup {
   width: 380px;
   flex-shrink: 0;
@@ -1079,27 +1176,7 @@ body {
   }
 }
 
-.phone-statusbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 20px 4px;
-  font-size: 12px;
-  color: var(--text);
-  font-weight: 600;
-  position: relative;
-}
-
-.phone-notch {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 24px;
-  background: #1a1a1a;
-  border-radius: 0 0 16px 16px;
-}
+/* 小艺头部 */
 
 .phone-icons {
   display: flex;
@@ -1520,6 +1597,9 @@ body {
 }
 
 /* 结果手机（右侧） */
+.result-phone {
+  height: 720px;
+}
 .result-phone {
   height: 640px;
 }
