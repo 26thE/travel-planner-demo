@@ -1274,8 +1274,7 @@ body {
 
 /* 对话区域 */
 .chat-area {
-  height: 480px;
-  flex: none;
+  flex: 1;
   overflow-y: auto;
   padding: 16px;
   display: flex;
