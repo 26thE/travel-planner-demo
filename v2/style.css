@@ -988,11 +988,6 @@ body {
 }
 
 /* 用户消息 - 头像在右边 */
-.user-msg {
-  flex-direction: row-reverse;
-  align-self: flex-end;
-}
-
 .user-msg .msg-avatar {
   width: 28px;
   height: 28px;
