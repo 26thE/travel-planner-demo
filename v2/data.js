@@ -1,0 +1,421 @@
+// 小红书风格旅行计划 Mock 数据
+// 目的地：云南大理 + 丽江
+// 预算：3000元 / 4天3夜
+
+const TRIP_DATA = {
+  title: "🌸 云南大理丽江 · 4天3夜慢旅行",
+  subtitle: "苍山雪，洱海月，古城烟火气",
+  budget: {
+    total: 3000,
+    currency: "CNY",
+    breakdown: {
+      transport: { label: "大交通", amount: 800, icon: "✈️" },
+      local: { label: "当地交通", amount: 300, icon: "🚗" },
+      accommodation: { label: "住宿", amount: 600, icon: "🏨" },
+      food: { label: "餐饮", amount: 700, icon: "🍜" },
+      tickets: { label: "门票", amount: 400, icon: "🎫" },
+      shopping: { label: "购物/其他", amount: 200, icon: "🛍️" }
+    }
+  },
+  travelers: 1,
+  dates: {
+    start: "2026-05-01",
+    end: "2026-05-04",
+    days: 4
+  },
+  destinations: [
+    {
+      id: "dali",
+      name: "大理",
+      tagline: "风花雪月的浪漫古城",
+      coordinates: [25.6065, 100.2676],
+      days: [1, 2]
+    },
+    {
+      id: "lijiang",
+      name: "丽江",
+      tagline: "纳西风情与雪山圣境",
+      coordinates: [26.8721, 100.2295],
+      days: [3, 4]
+    }
+  ],
+  schedule: [
+    {
+      day: 1,
+      date: "5月1日",
+      weekday: "周五",
+      destination: "大理",
+      theme: "初见大理 · 古城慢逛",
+      spots: [
+        {
+          time: "09:00",
+          title: "抵达大理",
+          desc: "✈️ 昆明转机或直飞大理，机场大巴/打车前往古城",
+          cost: "机场大巴25元",
+          transport: "机场大巴 → 古城南门",
+          duration: "1.5小时",
+          location: [25.6065, 100.2676],
+          icon: "✈️",
+          tips: "提前订好古城内客栈，建议选择人民路或洋人街附近"
+        },
+        {
+          time: "11:00",
+          title: "入住古城客栈",
+          desc: "🏡 放下行李，在客栈天台看苍山云起。推荐选择带白族庭院特色的民宿",
+          cost: "150元/晚",
+          location: [25.692, 100.161],
+          icon: "🏨",
+          tags: ["白族建筑", "庭院", "天台观景"]
+        },
+        {
+          time: "12:30",
+          title: "午餐：古城小吃",
+          desc: "🍜 饵丝、凉鸡米线、烤乳扇、鲜花饼。人民路小摊边走边吃",
+          cost: "40元",
+          location: [25.6925, 100.162],
+          icon: "🍜",
+          tags: ["饵丝", "烤乳扇", "鲜花饼"]
+        },
+        {
+          time: "14:00",
+          title: "大理古城漫步",
+          desc: "🚶‍♀️ 从南门进，逛复兴路、人民路、洋人街。打卡五华楼、床单厂艺术区",
+          cost: "免费",
+          location: [25.6928, 100.163],
+          icon: "🚶",
+          tags: ["五华楼", "床单厂", "文艺小店"],
+          xiaohongshuNotes: [
+            "📸 五华楼二楼是拍古城全景的最佳机位",
+            "🎨 床单厂艺术区每周六有市集，超好逛",
+            "☕ 人民路有很多独立咖啡馆，适合发呆"
+          ]
+        },
+        {
+          time: "17:30",
+          title: "龙龛码头日落",
+          desc: "🌅 骑行/打车到洱海边，等一场橘子海日落。水杉林+洱海=出片圣地",
+          cost: "打车20元",
+          location: [25.684, 100.185],
+          icon: "🌅",
+          tags: ["洱海日落", "水杉林", "骑行"],
+          xiaohongshuNotes: [
+            "🚲 租自行车15元/天，沿海西生态廊道骑行超治愈",
+            "📷 下午5点后光线最柔和，记得带反光板"
+          ]
+        },
+        {
+          time: "19:30",
+          title: "晚餐：白族石板烧",
+          desc: "🔥 古城内找一家人气石板烧，烤肉+风花雪月啤酒，感受大理夜生活",
+          cost: "80元",
+          location: [25.693, 100.164],
+          icon: "🍖",
+          tags: ["石板烧", "本地特色"]
+        }
+      ]
+    },
+    {
+      day: 2,
+      date: "5月2日",
+      weekday: "周六",
+      destination: "大理",
+      theme: "洱海环海 · 喜洲田园",
+      spots: [
+        {
+          time: "08:30",
+          title: "早餐：喜洲粑粑",
+          desc: "🥞 古城北门早市买喜洲粑粑，甜咸两种口味都要试",
+          cost: "15元",
+          location: [25.694, 100.165],
+          icon: "🥞",
+          tags: ["喜洲粑粑", "早市"]
+        },
+        {
+          time: "09:30",
+          title: "海西生态廊道骑行",
+          desc: "🚲 从才村码头出发，沿洱海生态廊道向北骑行。途经S弯、廊桥、海舌公园",
+          cost: "租车20元",
+          location: [25.712, 100.195],
+          icon: "🚲",
+          tags: ["洱海S弯", "廊桥", "海舌公园"],
+          xiaohongshuNotes: [
+            "🌊 磻溪S弯上午人最少，9点前到能拍到空镜",
+            "🌾 4-5月麦田绿油油，和洱海蓝形成绝美对比"
+          ]
+        },
+        {
+          time: "12:00",
+          title: "喜洲古镇午餐",
+          desc: "🏘️ 逛喜洲白族民居，看转角楼、严家大院。午餐吃喜洲破酥粑粑+凉鸡米线",
+          cost: "50元",
+          location: [25.857, 100.128],
+          icon: "🏘️",
+          tags: ["转角楼", "严家大院", "麦田"],
+          xiaohongshuNotes: [
+            "🌾 喜洲麦田5月最绿，转角楼前面那片最出片",
+            "☕ 麦田边的咖啡馆二楼是最佳观景台"
+          ]
+        },
+        {
+          time: "14:30",
+          title: "双廊古镇",
+          desc: "🌊 洱海东岸的双廊，杨丽萍太阳宫所在地。沿海咖啡馆看洱海发呆",
+          cost: "免费",
+          location: [25.915, 100.202],
+          icon: "☕",
+          tags: ["太阳宫", "海景咖啡", "南诏风情岛"]
+        },
+        {
+          time: "17:00",
+          title: "小普陀/挖色",
+          desc: "🐦 冬季可以看海鸥，夏季看洱海波光粼粼。挖色码头的水中步道超出片",
+          cost: "免费",
+          location: [25.863, 100.245],
+          icon: "📸",
+          tags: ["小普陀", "挖色", "水中步道"]
+        },
+        {
+          time: "19:00",
+          title: "返回古城 + 晚餐",
+          desc: "🌙 环海一圈回到古城，晚餐找一家菌菇火锅，尝尝云南特色野生菌",
+          cost: "120元",
+          location: [25.692, 100.161],
+          icon: "🍄",
+          tags: ["菌菇火锅", "野生菌"]
+        }
+      ]
+    },
+    {
+      day: 3,
+      date: "5月3日",
+      weekday: "周日",
+      destination: "丽江",
+      theme: "奔赴丽江 · 雪山圣境",
+      spots: [
+        {
+          time: "08:00",
+          title: "大理 → 丽江",
+          desc: "🚆 乘坐动车前往丽江（约2小时），沿途看苍山洱海渐远，玉龙雪山渐近",
+          cost: "动车80元",
+          transport: "D8772 大理09:15 → 丽江11:05",
+          duration: "2小时",
+          from: [25.6065, 100.2676],
+          to: [26.8721, 100.2295],
+          location: [26.8721, 100.2295],
+          icon: "🚄",
+          tags: ["动车", "沿途风景"]
+        },
+        {
+          time: "11:30",
+          title: "入住丽江古城",
+          desc: "🏡 建议选择束河古镇或丽江古城北门附近，相对安静。放下行李休整",
+          cost: "150元/晚",
+          location: [26.875, 100.235],
+          icon: "🏨",
+          tags: ["束河古镇", "纳西庭院"]
+        },
+        {
+          time: "13:00",
+          title: "午餐：纳西风味",
+          desc: "🍲 腊排骨火锅、鸡豆凉粉、纳西烤鱼。古城内很多口碑小店",
+          cost: "60元",
+          location: [26.874, 100.238],
+          icon: "🍲",
+          tags: ["腊排骨", "鸡豆凉粉", "纳西菜"]
+        },
+        {
+          time: "14:30",
+          title: "玉龙雪山",
+          desc: "🏔️ 提前抢票！冰川公园大索道直达4680米。带氧气瓶+羽绒服。蓝月谷在下山路上",
+          cost: "门票+索道280元",
+          location: [27.098, 100.181],
+          icon: "🏔️",
+          tags: ["冰川公园", "4680米", "蓝月谷"],
+          xiaohongshuNotes: [
+            "⚠️ 大索道票要提前一天晚上20:00在小程序抢",
+            "🧥 山顶温度零下，景区租羽绒服50元/件",
+            "💊 提前在古城买氧气瓶15元，山上60元"
+          ]
+        },
+        {
+          time: "18:00",
+          title: "蓝月谷",
+          desc: "💎 雪山下的蓝宝石，白水河、玉液湖。不用滤镜的Tiffany蓝",
+          cost: "含在门票内",
+          location: [27.118, 100.195],
+          icon: "💎",
+          tags: ["Tiffany蓝", "白水河", "雪山倒影"],
+          xiaohongshuNotes: [
+            "📸 下午4-6点光线最好，湖水颜色最蓝",
+            "👗 穿白色或红色裙子拍照最出片"
+          ]
+        },
+        {
+          time: "20:00",
+          title: "丽江古城夜景",
+          desc: "🌃 从大水车进古城，逛四方街、酒吧街。看纳西古乐表演或找个清吧听歌",
+          cost: "免费/酒吧50元",
+          location: [26.872, 100.238],
+          icon: "🌃",
+          tags: ["大水车", "四方街", "酒吧街"]
+        }
+      ]
+    },
+    {
+      day: 4,
+      date: "5月4日",
+      weekday: "周一",
+      destination: "丽江",
+      theme: "古城漫步 · 返程",
+      spots: [
+        {
+          time: "08:00",
+          title: "狮子山日出",
+          desc: "🌄 早起登狮子山万古楼，俯瞰丽江古城全景。看晨光洒满青瓦屋顶",
+          cost: "门票35元",
+          location: [26.869, 100.236],
+          icon: "🌄",
+          tags: ["万古楼", "古城全景", "日出"]
+        },
+        {
+          time: "09:30",
+          title: "木府",
+          desc: "🏛️ '北有故宫，南有木府'。纳西族土司府邸，了解丽江历史文化的必去之地",
+          cost: "门票40元",
+          location: [26.871, 100.239],
+          icon: "🏛️",
+          tags: ["土司府", "纳西文化", "建筑"]
+        },
+        {
+          time: "11:00",
+          title: "忠义市场",
+          desc: "🍑 本地人逛的市场，买牦牛肉干、鲜花饼、普洱茶当伴手礼",
+          cost: "购物100元",
+          location: [26.868, 100.241],
+          icon: "🛍️",
+          tags: ["伴手礼", "牦牛肉", "普洱茶"]
+        },
+        {
+          time: "12:30",
+          title: "午餐 + 休息",
+          desc: "🍜 最后一顿纳西美食，然后回客栈收拾行李",
+          cost: "50元",
+          location: [26.875, 100.235],
+          icon: "🍜",
+          tags: ["纳西美食"]
+        },
+        {
+          time: "15:00",
+          title: "返程",
+          desc: "✈️ 从三义机场返程，结束4天3夜的美好旅程。带着照片和回忆回家~",
+          cost: "机票/动车自理",
+          location: [26.672, 100.246],
+          icon: "✈️",
+          tags: ["返程"]
+        }
+      ]
+    }
+  ],
+  route: {
+    segments: [
+      {
+        from: "大理古城",
+        to: "喜洲古镇",
+        mode: " bicycle/电动车",
+        distance: "18km",
+        time: "1小时",
+        note: "沿海西生态廊道骑行"
+      },
+      {
+        from: "喜洲古镇",
+        to: "双廊古镇",
+        mode: "包车/拼车",
+        distance: "25km",
+        time: "40分钟",
+        note: "环海东路风景绝美"
+      },
+      {
+        from: "双廊古镇",
+        to: "大理古城",
+        mode: "包车/拼车",
+        distance: "45km",
+        time: "1小时",
+        note: "环海一圈回到起点"
+      },
+      {
+        from: "大理",
+        to: "丽江",
+        mode: "动车",
+        distance: "159km",
+        time: "2小时",
+        note: "D8772等班次，提前购票"
+      },
+      {
+        from: "丽江古城",
+        to: "玉龙雪山",
+        mode: "景区直通车/包车",
+        distance: "30km",
+        time: "50分钟",
+        note: "古城口有101路雪山专线，15元"
+      }
+    ]
+  },
+  xiaohongshuTips: [
+    "💡 云南紫外线强，务必做好防晒，SPF50+",
+    "💡 古城石板路拖箱子很难走，建议背包或住路口",
+    "💡 玉龙雪山大索道票要提前1天晚上8点抢票",
+    "💡 洱海骑行建议上午出发，避开下午的风",
+    "💡 丽江古城晚上11点后静音，酒吧会关门",
+    "💡 5月天气：白天20-25°C，早晚10°C左右，带薄外套"
+  ]
+};
+
+// 自动分类：玩 / 食 / 住 / 行
+function categorizeSpots() {
+  const result = { byDay: {}, byPlace: {} };
+
+  TRIP_DATA.schedule.forEach(day => {
+    const dayCats = { play: [], food: [], stay: [], transport: [] };
+
+    day.spots.forEach(spot => {
+      const combined = spot.title + ' ' + spot.desc;
+      const foodKeywords = /午餐|晚餐|早餐|小吃|美食|火锅|米线|粑粑|乳扇|鲜花饼|菌菇|石板烧|腊排骨|鸡豆凉粉|纳西烤鱼|凉鸡|饵丝|饮品|咖啡|啤酒|茶饮|点心|甜品|风味|吃/i;
+      const stayKeywords = /入住|客栈|酒店|住宿|民宿|休整|放行李/i;
+      const transportKeywords = /抵达|动车|火车|飞机|大巴|骑行|交通|返程|前往|机场|公交|车站|打车|包车|拼车|租车|索道|缆车|转|去|回/i;
+
+      if (foodKeywords.test(combined)) {
+        dayCats.food.push(spot);
+      } else if (stayKeywords.test(combined)) {
+        dayCats.stay.push(spot);
+      } else if (transportKeywords.test(combined)) {
+        dayCats.transport.push(spot);
+      } else {
+        dayCats.play.push(spot);
+      }
+    });
+
+    result.byDay[day.day] = dayCats;
+  });
+
+  // 按地点分类
+  TRIP_DATA.destinations.forEach(dest => {
+    const placeCats = { play: [], food: [], stay: [], transport: [] };
+    dest.days.forEach(dayNum => {
+      const dayCats = result.byDay[dayNum];
+      placeCats.play.push(...dayCats.play);
+      placeCats.food.push(...dayCats.food);
+      placeCats.stay.push(...dayCats.stay);
+      placeCats.transport.push(...dayCats.transport);
+    });
+    result.byPlace[dest.id] = placeCats;
+  });
+
+  return result;
+}
+
+const CATEGORIZED_DATA = categorizeSpots();
+
+// 导出
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { TRIP_DATA, CATEGORIZED_DATA };
+}

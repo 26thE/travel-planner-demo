@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌸 云南旅行计划 | 随身行程单</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <nav class="top-nav">
+    <div class="nav-brand">
+      <span class="logo">🌸</span>
+      <span class="brand-text">随身行程单</span>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn active" data-view="itinerary">
+        <i class="fas fa-stream"></i> 行程单
+      </button>
+      <button class="nav-btn" data-view="map">
+        <i class="fas fa-map-marked-alt"></i> 地图
+      </button>
+      <button class="nav-btn" data-view="budget">
+        <i class="fas fa-wallet"></i> 预算
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero 区域 -->
+  <header class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1 id="trip-title"></h1>
+      <p id="trip-subtitle"></p>
+      <div class="hero-tags">
+        <span class="tag"><i class="fas fa-calendar-alt"></i> <span id="trip-dates"></span></span>
+        <span class="tag"><i class="fas fa-user"></i> <span id="trip-travelers"></span>人</span>
+        <span class="tag tag-budget"><i class="fas fa-coins"></i> 预算 <span id="trip-budget"></span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+    <!-- 行程单视图（默认） -->
+    <section id="itinerary-view" class="view active">
+      <!-- 流程步骤条 -->
+      <div class="flow-steps" id="flow-steps">
+        <div class="flow-step active" data-step="1">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-label">选择 Skill</div>
+        </div>
+        <div class="flow-line"></div>
+        <div class="flow-step" data-step="2">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-label">导入博文</div>
+        </div>
+        <div class="flow-line"></div>
+        <div class="flow-step" data-step="3">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-label">输入预算</div>
+        </div>
+        <div class="flow-line"></div>
+        <div class="flow-step" data-step="4">
+          <div class="flow-step-num">4</div>
+          <div class="flow-step-label">生成行程</div>
+        </div>
+      </div>
+
+      <!-- 对话动画手机 -->
+      <div class="phone-mockup chat-phone" id="chat-phone">
+        <div class="phone-statusbar">
+          <span class="phone-time">10:08</span>
+          <div class="phone-notch"></div>
+          <div class="phone-icons">
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <i class="fas fa-battery-full"></i>
+          </div>
+        </div>
+
+        <!-- 小艺头部 -->
+        <div class="xiaoai-header">
+          <div class="xiaoai-avatar">🤖</div>
+          <div class="xiaoai-info">
+            <div class="xiaoai-name">小艺 · AI旅行助手</div>
+            <div class="xiaoai-status"><span class="status-dot"></span> 在线 · 已接入小红书</div>
+          </div>
+        </div>
+
+        <!-- 对话区域 -->
+        <div class="chat-area" id="chat-area">
+          <div class="chat-date">今天 10:02</div>
+
+          <div class="chat-msg user-msg" data-msg="1">
+            <div class="msg-bubble">我收藏了几篇云南攻略，帮我参考一下做旅行计划 📝
+              <div class="msg-meta">
+                <div class="share-card"><span>📎</span>「大理4天3夜慢旅行」</div>
+                <div class="share-card"><span>📎</span>「洱海骑行超全攻略」</div>
+                <div class="share-card"><span>📎</span>「玉龙雪山避坑指南」</div>
+              </div>
+            </div>
+            <div class="msg-avatar">👤</div>
+          </div>
+
+          <div class="chat-msg user-msg" data-msg="2">
+            <div class="msg-bubble">对了，还有我收藏的「云南旅行 Skill」也一起导入吧 📚</div>
+            <div class="msg-avatar">👤</div>
+          </div>
+
+          <div class="chat-msg ai-msg" data-msg="3">
+            <div class="msg-avatar">🤖</div>
+            <div class="msg-bubble">
+              <div class="typing-indicator" id="typing-1"><span></span><span></span><span></span></div>
+              <div class="msg-content" id="content-1" style="display:none">收到！正在导入你收藏的小红书资源... 🔍<div class="msg-meta">解析攻略内容 + 加载 Skill 规则</div></div>
+            </div>
+          </div>
+
+          <div class="chat-msg ai-msg" data-msg="4">
+            <div class="msg-avatar">🤖</div>
+            <div class="msg-bubble">
+              <div class="typing-indicator" id="typing-2"><span></span><span></span><span></span></div>
+              <div class="msg-content" id="content-2" style="display:none">
+                <div class="import-card">
+                  <div class="import-title"><i class="fas fa-check-circle"></i> 已成功导入 4 项资源</div>
+                  <div class="import-item"><span class="import-icon">📚</span><span>「云南旅行 Skill」</span><span class="import-tag">收藏</span></div>
+                  <div class="import-item"><span class="import-icon">📖</span><span>「大理4天3夜慢旅行」</span><span class="import-tag">2.3w赞</span></div>
+                  <div class="import-item"><span class="import-icon">📖</span><span>「洱海骑行超全攻略」</span><span class="import-tag">1.8w赞</span></div>
+                  <div class="import-item"><span class="import-icon">📖</span><span>「玉龙雪山避坑指南」</span><span class="import-tag">1.5w赞</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-msg user-msg" data-msg="5">
+            <div class="msg-bubble">预算 <strong>3000</strong> 左右，帮我安排一下 💰</div>
+            <div class="msg-avatar">👤</div>
+          </div>
+
+          <div class="chat-msg ai-msg" data-msg="6">
+            <div class="msg-avatar">🤖</div>
+            <div class="msg-bubble">
+              <div class="typing-indicator" id="typing-3"><span></span><span></span><span></span></div>
+              <div class="msg-content" id="content-3" style="display:none">已结合导入的攻略和 Skill，根据预算 <strong>¥3000</strong> 优化为 <strong>4 天 3 夜</strong> 慢旅行计划 📅<div class="msg-meta">参考 3 篇真实笔记 + Skill 规则引擎</div></div>
+            </div>
+          </div>
+
+          <div class="chat-msg user-msg" data-msg="7">
+            <div class="msg-bubble">想看看完整计划 👀</div>
+            <div class="msg-avatar">👤</div>
+          </div>
+
+          <div class="chat-msg ai-msg" data-msg="8">
+            <div class="msg-avatar">🤖</div>
+            <div class="msg-bubble">
+              <div class="typing-indicator" id="typing-4"><span></span><span></span><span></span></div>
+              <div class="msg-content" id="content-4" style="display:none">已生成！点击下方按钮查看你的旅行计划 👇<div class="msg-meta">时间线 / 地图 / 预算</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 底部输入框 -->
+        <div class="phone-inputbar">
+          <i class="fas fa-plus-circle"></i>
+          <div class="input-placeholder">输入预算或目的地...</div>
+          <i class="fas fa-paper-plane"></i>
+        </div>
+
+        <div class="phone-gesture-bar"></div>
+      </div>
+
+      <!-- 行程单内容（对话结束后显示） -->
+      <div class="itinerary-result" id="itinerary-result" style="display:none">
+        <div class="phone-mockup">
+          <div class="phone-statusbar">
+            <span class="phone-time">10:08</span>
+            <div class="phone-notch"></div>
+            <div class="phone-icons">
+              <i class="fas fa-signal"></i>
+              <i class="fas fa-wifi"></i>
+              <i class="fas fa-battery-full"></i>
+            </div>
+          </div>
+          <div class="phone-scroll" id="itinerary-content"></div>
+          <div class="phone-reminder" id="phone-reminder">💡 今日提醒：明天出发，记得带防晒霜</div>
+          <div class="phone-gesture-bar"></div>
+        </div>
+      </div>
+
+      <!-- 重新体验按钮 -->
+      <div class="replay-area" id="replay-area" style="display:none">
+        <button class="replay-btn" id="replay-btn">
+          <i class="fas fa-redo"></i> 重新体验生成流程
+        </button>
+      </div>
+
+      <!-- 鸿蒙桌面卡片预览 -->
+      <div class="harmony-card-preview" id="harmony-card-preview" style="display:none">
+        <div class="harmony-card-label">
+          <i class="fas fa-th-large"></i> 添加到鸿蒙桌面的卡片效果
+        </div>
+        <div class="harmony-card">
+          <div class="hc-header">
+            <span class="hc-icon">🌸</span>
+            <div class="hc-title">
+              <div class="hc-name">云南 · 4天3夜</div>
+              <div class="hc-meta">¥3000 · 大理→丽江</div>
+            </div>
+          </div>
+          <div class="hc-timeline" id="hc-timeline">
+            <div class="hc-dot active"></div>
+            <div class="hc-line"></div>
+            <div class="hc-dot"></div>
+            <div class="hc-line"></div>
+            <div class="hc-dot"></div>
+            <div class="hc-line"></div>
+            <div class="hc-dot"></div>
+          </div>
+          <div class="hc-days" id="hc-days">
+            <span class="hc-day active" data-day="1">Day1</span>
+            <span class="hc-day" data-day="2">Day2</span>
+            <span class="hc-day" data-day="3">Day3</span>
+            <span class="hc-day" data-day="4">Day4</span>
+          </div>
+          <div class="hc-list" id="hc-list">
+            <div class="hc-item">
+              <span class="hc-time">09:00</span>
+              <span class="hc-text">抵达大理 ✈️</span>
+            </div>
+            <div class="hc-item">
+              <span class="hc-time">11:00</span>
+              <span class="hc-text">入住古城 🏨</span>
+            </div>
+            <div class="hc-item">
+              <span class="hc-time">14:00</span>
+              <span class="hc-text">古城漫步 🚶</span>
+            </div>
+          </div>
+          <div class="hc-reminder">
+            <i class="fas fa-bell"></i> 明日提醒：玉龙雪山大索道 09:00
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 地图视图（简化文字路线） -->
+    <section id="map-view" class="view">
+      <div class="route-list-wrapper">
+        <h3><i class="fas fa-route"></i> 行程路线</h3>
+        <div id="route-list"></div>
+      </div>
+    </section>
+
+    <!-- 预算视图（简化） -->
+    <section id="budget-view" class="view">
+      <div class="budget-simple">
+        <div class="budget-card total">
+          <div class="budget-circle">
+            <span class="budget-amount" id="budget-total"></span>
+            <span class="budget-label">总预算</span>
+          </div>
+        </div>
+        <div class="budget-bars" id="budget-bars"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 详情弹窗 -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- 底部提示 -->
+  <footer class="footer">
+    <p>💡 基于小红书真实笔记整理 | 预算可根据实际情况调整</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
